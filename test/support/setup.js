@@ -1,5 +1,8 @@
+'use strict';
+
 require('object.observe');
 
+// record the changes to the window object
 global.mk_window_changes = {};
 
 Object.observe(global.window, changes => {

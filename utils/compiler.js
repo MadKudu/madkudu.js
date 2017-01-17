@@ -7,6 +7,7 @@ const debug = require('debug')('compiler');
 const fs = require('fs');
 
 const WEBPACK_CONFIG = require('../webpack.config');
+const DEFAULT_SETTINGS = require('./default_settings');
 
 const FILENAME = 'madkudu.js';
 // const DIST_PATH = this.tenant ? './dist/' + this.tenant : './dist';
@@ -16,7 +17,7 @@ const JSON_INDENT = 4;
 
 
 const Compiler = function (settings, options) {
-	this.settings = settings || { api_key: 'test', form: { active: true, has_campaigns: true, campaigns: [] } };
+	this.settings = settings || DEFAULT_SETTINGS;
 	this.options = options || {};
 
 	this.form = this.settings.form || {};

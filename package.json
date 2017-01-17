@@ -1,7 +1,7 @@
 {
   "name": "@madkudu/madkudu.js",
   "author": "MadKudu <engineering@madkudu.com>",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "license": "SEE LICENSE IN LICENSE",
   "description": "The MadKudu javascript library",
   "keywords": [
@@ -97,7 +97,7 @@
     "babel-plugin-istanbul": "3.1.2",
     "chai": "3.5.0",
     "eslint": "3.12.2",
-    "eslint-plugin-mocha": "^4.8.0",
+    "eslint-plugin-mocha": "4.8.0",
     "mocha": "3.2.0",
     "sinon": "2.0.0-pre.5"
   }

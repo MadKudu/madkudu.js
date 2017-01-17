@@ -6,14 +6,20 @@
 
 # madkudu.js
 
-## Compiling
+## Compile
 
 ```
 npm run compile
 ```
 
-## Running tests
+## Run tests
 
 ```
 npm test
+```
+
+## Serve the compiled js from a local server
+
+```
+node utils/server.js
 ```
