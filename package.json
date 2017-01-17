@@ -1,12 +1,21 @@
 {
-  "name": "madkudu.js",
+  "name": "@madkudu/madkudu.js",
   "author": "MadKudu <engineering@madkudu.com>",
   "version": "1.0.0",
-  "description": ".",
+  "license": "SEE LICENSE IN LICENSE",
+  "description": "The MadKudu javascript library",
+  "keywords": [
+    "madkudu",
+    "madkudu.js"
+  ],
   "repository": {
     "url": "https://github.com/MadKudu/madkudu.js.git",
     "type": "git"
   },
+  "bugs": {
+    "url": "https://github.com/MadKudu/madkudu.js/issues"
+  },
+  "homepage": "https://github.com/MadKudu/madkudu.js#readme",
   "engines": {
     "node": "6.9.1",
     "npm": "3.10.8"
