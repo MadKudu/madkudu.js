@@ -119,8 +119,7 @@ module.exports = function (config) {
 			dir: 'dist/coverage/' + test_type,
 			reporters: [
 				{ type: 'text' },
-				{ type: 'html' },
-				{ type: 'json' }
+				{ type: 'lcov' }
 			]
 		}
 
