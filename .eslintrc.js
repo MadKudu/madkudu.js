@@ -30,13 +30,13 @@ module.exports = {
 	},
 
 	"rules": {
-		"comma-dangle": [1, {
-			"arrays": "never",
-			"objects": "ignore",
-			"imports": "never",
-			"exports": "never",
-			"functions": "ignore",
-		}],
+		// "comma-dangle": [1, {
+		// 	"arrays": "never",
+		// 	"objects": "ignore",
+		// 	"imports": "never",
+		// 	"exports": "never",
+		// 	"functions": "ignore",
+		// }],
 		"consistent-this": [2, "self"],
 		"curly": 2,
 		"eqeqeq": [2, "smart"],
