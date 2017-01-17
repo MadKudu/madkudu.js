@@ -26,7 +26,8 @@ module.exports = function (config) {
 					{ pattern: 'test/support/setup.js', watched: true },
 					{ pattern: 'dist/madkudu.min.js', watched: true },
 					{ pattern: 'test/support/teardown.js', watched: true },
-					{ pattern: 'test/compiled/*.js', watched: true }
+					{ pattern: 'test/compiled/mk_window_changes.js', watched: true },
+					{ pattern: 'test/compiled/window.madkudu.js', watched: true }
 				];
 			} else if (test_type === 'jquery') {
 				return [
@@ -49,6 +50,7 @@ module.exports = function (config) {
 			} else if (test_type === 'require') {
 				return [
 					{ pattern: 'dist/madkudu.min.js', watched: true, included: false },
+					{ pattern: 'support/domReady.js', watched: true, included: false },
 					{ pattern: 'test/support/setup.js', watched: true },
 					{ pattern: 'https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.2/require.js' },
 					{ pattern: 'test/support/require_main.js' },
@@ -124,7 +126,6 @@ module.exports = function (config) {
 			if (CI === 'true') {
 				return ['Chrome', 'Firefox'];
 			} else if (DEV === 'true' && test_type === 'stripe') {
-				// console.log('CHROMIUM');
 				return ['Chrome_without_security'];
 			} else if (DEV === 'true') {
 				return ['Chrome'];

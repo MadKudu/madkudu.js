@@ -12,7 +12,7 @@ describe('madkudu.ready', function () {
 		});
 	});
 
-	it('should wait to load segment madkudu', function () {
+	it('should wait to load madkudu with require', function () {
 		expect(window.madkudu).to.be.an('object');
 	});
 
