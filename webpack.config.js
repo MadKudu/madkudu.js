@@ -1,9 +1,13 @@
 'use strict';
 
-const fs = require('fs');
-const babel_settings = JSON.parse(fs.readFileSync('./.babelrc', { encoding: 'utf-8' }));
-// read the babel config from the file instead of relying on .babelrc, to make sure it works when used as a module
-// (since I'm not sure what happens when there's also a .babelrc in the requiring project)
+const babel_settings = {
+	'presets': ['es2015'],
+	'env': {
+		'test': {
+			'plugins': [ 'istanbul' ]
+		}
+	}
+};
 
 module.exports = {
 	resolveLoader: {
@@ -13,7 +17,7 @@ module.exports = {
 		loaders: [
 			{
 				test: /\.js$/,
-				exclude: /node_modules/,
+				exclude: /node_modules(?!(\/@madkudu\/madkudu\.js))/, // exclude all node_modules, except @madkudu/madkudu.js (the exclusion is necessary for this to work inside another project)
 				loader: 'babel-loader',
 				query: babel_settings
 			},
