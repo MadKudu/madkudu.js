@@ -56,7 +56,6 @@ describe('settings', function () {
 	});
 
 	it('should have properties', function () {
-		console.log(madkudu.settings);
 		expect(madkudu.settings.api_key).to.be.a('string');
 		expect(madkudu.settings.form).to.be.an('object');
 		expect(madkudu.settings.form.active).to.be.a('boolean');
