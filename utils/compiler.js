@@ -26,7 +26,6 @@ const Compiler = function (settings, options) {
 	this.options.filename = this.options.filename || FILENAME;
 
 	this.logger = this.options.logger || console;
-
 };
 
 Compiler.prototype.get_webpack_config = function (options) {

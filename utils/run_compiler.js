@@ -3,9 +3,7 @@ const watch = process.env.WATCH === 'true';
 
 const Compiler = require('./compiler');
 
-const DEFAULT_OPTIONS = {
-	min: true,
-};
+const DEFAULT_OPTIONS = { min: true };
 
 const compiler = new Compiler();
 

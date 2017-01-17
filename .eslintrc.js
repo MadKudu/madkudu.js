@@ -68,5 +68,5 @@ module.exports = {
 		'space-unary-ops': 2,
 		'spaced-comment': 1,
 		'valid-jsdoc': 1
-	},
-}
+	}
+};
