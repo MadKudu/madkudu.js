@@ -1,7 +1,7 @@
 {
   "name": "@madkudu/madkudu.js",
   "author": "MadKudu <engineering@madkudu.com>",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "license": "SEE LICENSE IN LICENSE",
   "description": "The MadKudu javascript library",
   "keywords": [
