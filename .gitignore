@@ -1,0 +1,36 @@
+# OS generated files #
+######################
+.DS_Store
+*/.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Node modules and grunt #
+##########################
+/.grunt/**
+/node_modules/**
+
+# Logs and databases #
+######################
+*.log
+*.sqlite
+
+# Distributions #
+#################
+dist/**/*.js
+dist/**/*.json
+dist/**/*.map
+dist/coverage
+
+# Environment file #
+####################
+.env
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
