@@ -8,7 +8,7 @@ describe('window', function () {
 
 	it('should change only the madkudu property',function () {
 
-		const modified_properties = _.keys(_.omit(window.mk_window_changes,['_', 'onerror']));
+		const modified_properties = _.keys(_.omit(window.mk_window_changes,['_', 'onerror', '__coverage__']));
 		/* @todo: the last two are artefact from Karma */
 
 		console.log(modified_properties);
