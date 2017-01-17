@@ -33,6 +33,7 @@ Compiler.prototype.get_webpack_config = function (options) {
 
 	const webpack_config = _.cloneDeep(WEBPACK_CONFIG);
 
+	webpack_config.context = __dirname + '/..';
 	webpack_config.entry = SRC;
 	webpack_config.output.filename = options.min ? this.options.filename.replace('.js', '.min.js') : this.options.filename;
 	webpack_config.output.path = this.options.dist_path;
