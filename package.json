@@ -35,7 +35,7 @@
     "test-require": "NODE_ENV=test TESTS=require npm run karma",
     "test-segment": "NODE_ENV=test TESTS=segment npm run karma",
     "karma": "./node_modules/karma/bin/karma start karma.conf.js",
-    "coverage": "./node_modules/codeclimate-test-reporter/bin/codeclimate.js < 'dist/coverage/unit/Chrome 55.0.2883 (Mac OS X 10.12.2)/lcov.info'"
+    "coverage": "./node_modules/codeclimate-test-reporter/bin/codeclimate.js < $(find dist/coverage/unit/Chrome*/lcov.info)"
   },
   "dependencies": {
     "@ndhoule/clone": "1.0.0",
