@@ -32,8 +32,6 @@ module.exports = function (config) {
 			} else if (test_type === 'jquery') {
 				return [
 					{ pattern: 'https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js', watched: false },
-					// { pattern: 'https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js', watched: false, included: true },
-					// { pattern: 'https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js', watched: false, included: true },
 					{ pattern: 'test/support/setup.js', watched: true },
 					{ pattern: 'dist/madkudu.min.js', watched: true },
 					{ pattern: 'test/support/teardown.js', watched: true },
