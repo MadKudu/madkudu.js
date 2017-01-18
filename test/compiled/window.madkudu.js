@@ -28,13 +28,16 @@ describe('window.madkudu', function () {
 
 describe('settings', function () {
 
-	var madkudu = window.madkudu;
 
 	it('should instantiate the settings on load', function () {
+		var madkudu = window.madkudu;
+
 		expect(madkudu.settings).to.be.an('object');
 	});
 
 	it('should have properties', function () {
+		var madkudu = window.madkudu;
+
 		expect(madkudu.settings.api_key).to.be.a('string');
 		expect(madkudu.settings.form).to.be.an('object');
 		expect(madkudu.settings.form.active).to.be.a('boolean');

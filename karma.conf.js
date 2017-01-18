@@ -50,7 +50,6 @@ module.exports = function (config) {
 			} else if (test_type === 'require') {
 				return [
 					{ pattern: 'dist/madkudu.min.js', watched: true, included: false },
-					{ pattern: 'support/domReady.js', watched: true, included: false },
 					{ pattern: 'test/support/setup.js', watched: true },
 					{ pattern: 'https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.2/require.js' },
 					{ pattern: 'test/support/require_main.js' },
