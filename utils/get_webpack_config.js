@@ -26,7 +26,8 @@ module.exports = function (settings, options) {
 	// inject the settings into the source
 	webpack_config.plugins.push(
 		new webpack.DefinePlugin({
-			__SETTINGS__: JSON.stringify(settings)
+			__SETTINGS__: JSON.stringify(settings),
+			__SEGMENT_API_KEY__: JSON.stringify(process.env.SEGMENT_API_KEY)
 		})
 	);
 
