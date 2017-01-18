@@ -8,7 +8,6 @@ describe('analytics.ready', function () {
 	before(function (done) {
 		// Wait the loading of analytics.js
 		window.analytics.ready(function () {
-			console.log('Analytics is ready');
 			done();
 		});
 	});
