@@ -3,12 +3,10 @@
 const CI = process.env.CI;
 const DEV = process.env.DEV;
 
-const webpack = require('webpack');
-const _ = require('lodash');
-const DEFAULT_WEBPACK_CONFIG = require('./webpack.config');
+const DEFAULT_SETTINGS = require('./utils/default_settings');
+const get_webpack_config = require('./utils/get_webpack_config');
 
 const test_type = process.env.TESTS || 'unit';
-const SEGMENT_API_KEY = process.env.SEGMENT_API_KEY;
 
 console.log(test_type);
 
@@ -78,25 +76,7 @@ module.exports = function (config) {
 			'test/**/support/*.js': ['webpack']
 		},
 
-		webpack: (function () {
-			const webpack_conf = _.cloneDeep(DEFAULT_WEBPACK_CONFIG);
-
-			webpack_conf.output = {
-				libraryTarget: 'var'
-			};
-
-			webpack_conf.plugins.push(
-				new webpack.DefinePlugin({
-					__3313__: JSON.stringify(false),
-					__CAMPAIGNS__: JSON.stringify(false),
-					__SETTINGS__: JSON.stringify({}),
-					__SEGMENT_API_KEY__: JSON.stringify(SEGMENT_API_KEY)
-				})
-			);
-
-			return webpack_conf;
-
-		})(),
+		webpack: get_webpack_config(DEFAULT_SETTINGS, { test: true }),
 
 		// test results reporter to use
 		// possible values: 'dots', 'progress'

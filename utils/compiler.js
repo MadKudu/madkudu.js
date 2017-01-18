@@ -2,25 +2,17 @@
 
 const webpack = require('webpack');
 const Q = require('q');
-const _ = require('lodash');
-const debug = require('debug')('compiler');
 const fs = require('fs');
-
-const WEBPACK_CONFIG = require('../webpack.config');
 const DEFAULT_SETTINGS = require('./default_settings');
+const get_webpack_config = require('./get_webpack_config');
 
 const FILENAME = 'madkudu.js';
-// const DIST_PATH = this.tenant ? './dist/' + this.tenant : './dist';
 const DIST_PATH = './dist';
-const SRC = './lib/index.js';
 const JSON_INDENT = 4;
-
 
 const Compiler = function (settings, options) {
 	this.settings = settings || DEFAULT_SETTINGS;
 	this.options = options || {};
-
-	this.form = this.settings.form || {};
 
 	this.options.dist_path = this.options.dist_path || DIST_PATH;
 	this.options.output_path = this.options.dist_path + '/' + FILENAME;
@@ -29,53 +21,29 @@ const Compiler = function (settings, options) {
 	this.logger = this.options.logger || console;
 };
 
-Compiler.prototype.get_webpack_config = function (options) {
-	options = options || {};
-
-	const webpack_config = _.cloneDeep(WEBPACK_CONFIG);
-
-	webpack_config.context = __dirname + '/..';
-	webpack_config.entry = SRC;
-	webpack_config.output.filename = options.min ? this.options.filename.replace('.js', '.min.js') : this.options.filename;
-	webpack_config.output.path = this.options.dist_path;
-
-	webpack_config.plugins.push(
-		new webpack.DefinePlugin({
-			__CAMPAIGNS__: JSON.stringify(this.form.has_campaigns),
-			__SETTINGS__: JSON.stringify(this.form.has_campaigns ? this.settings : {})
-		})
-	);
-	if (options.min) {
-		webpack_config.plugins.push(new webpack.optimize.UglifyJsPlugin({
-			compress: { warnings: !process.env.NODE_ENV === 'production' }
-		}));
-	}
-
-	debug(webpack_config);
-	return webpack_config;
-};
-
-Compiler.prototype._get_compiler = function (options) {
-	const webpack_config = this.get_webpack_config(options);
+Compiler.prototype._get_compiler = function () {
+	const webpack_config = get_webpack_config(this.settings, this.options);
 	return webpack(webpack_config);
 };
 
-Compiler.prototype.compile = function (options) {
-	options = options || {};
-	const compiler = this._get_compiler(options);
+Compiler.prototype.compile = function () {
+	const compiler = this._get_compiler();
 	return Q.ninvoke(compiler, 'run')
 		.then(stats => {
 			console.log(stats.toString({ chunks: false, colors: true }));
 			fs.writeFileSync(this.options.dist_path + '/webpack.json', JSON.stringify(stats.toJson({ reasons: true }), null, JSON_INDENT));
-			this.logger.log('info', 'compiled madkudu.js', { options: options });
+			this.logger.log('info', 'compiled madkudu.js', { options: this.options });
 		});
 };
 
 Compiler.prototype.run = function (options) {
 	options = options || {};
 	let promise = this.compile();
-	if (options.min) {
-		promise = promise.then(() => this.compile({ min: true })); // if min is specified, also compiled to the minified format
+	if (options.min) { // if min is specified, also compiled to the minified format
+		promise = promise.then(() => {
+			this.options.min = true;
+			return this.compile();
+		});
 	}
 	return promise;
 };
