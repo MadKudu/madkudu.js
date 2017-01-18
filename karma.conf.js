@@ -97,9 +97,7 @@ module.exports = function (config) {
 			if (process.env.BROWSERS) {
 				return process.env.BROWSERS.split(',');
 			} else if (CI === 'true') {
-				return ['Chrome', 'PhantomJS'];
-			} else if (DEV === 'true' && test_type === 'stripe') {
-				return ['Chrome_without_security'];
+				return ['Chrome', 'PhantomJS', 'Firefox'];
 			} else if (DEV === 'true') {
 				return ['Chrome'];
 			} else {
