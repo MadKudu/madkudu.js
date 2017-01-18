@@ -8,7 +8,7 @@ describe('window', function () {
 
 	it('should change only the madkudu property',function () {
 
-		const modified_properties = _.keys(_.omit(window.mk_window_changes,['_', 'onerror']));
+		const modified_properties = _.keys(_.omit(window.mk_window_changes,['__coverage__', '_', 'onerror']));
 		/* @todo: the last two are not expected, getting rid of them for now but this needs to be fixed */
 
 		console.log(modified_properties);
