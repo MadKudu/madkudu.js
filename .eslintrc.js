@@ -20,10 +20,18 @@ module.exports = {
 	},
 
 	'globals': {
-		'exports': true,
-		'module': true,
+		'module': false,
 		'require': false,
-		'global': true
+		'global': false,
+
+		'$': false,
+		'querystring': false,
+		'component_event': false,
+		'type': false,
+		'each': false,
+		'is': false,
+		'prevent': false,
+		'isMeta': false
 	},
 
 	'rules': {

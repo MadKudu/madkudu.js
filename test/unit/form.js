@@ -1,151 +1,271 @@
-//
-// const chai = require('chai');
-// const expect = chai.expect;
-// const _ = require('lodash');
-//
-// describe('forms', function () {
-//
-// 	var madkudu = window.madkudu;
-//
-// 	describe('load', function () {
-//
-// 		it('should exist', function () {
-// 			expect(madkudu.forms).to.be.an('array');
-// 			expect(madkudu.forms).to.have.length.of.at.least(1);
-// 		});
-//
-// 		it('should have a reference to window.madkudu', function () {
-// 			var form = madkudu.forms[0];
-// 			expect(form.madkudu).to.equal(window.madkudu);
-// 		});
-//
-// 		it('should have settings', function () {
-// 			var form = madkudu.forms[0];
-// 			// madkudu
-// 			expect(form.madkudu).to.be.an('object');
-//
-// 			// settings
-// 			expect(form.settings).to.be.exist;
-// 			expect(form.settings).to.be.an('object');
-//
-// 		});
-//
-// 		describe('settings', function () {
-//
-// 			var form = window.madkudu.forms[0];
-//
-// 			it('should have properties', function () {
-//
-// 				// settings properties
-// 				expect(form.settings._id).to.be.a('string');
-// 				expect(form.settings.active).to.be.a('boolean');
-// 				expect(form.settings.created_at).to.be.a('string');
-// 				expect(form.settings.custom_css).to.be.a('string');
-// 				expect(form.settings.custom_js).to.be.a('string');
-// 				expect(form.settings.description).to.be.a('string');
-// 				expect(form.settings.name).to.be.a('string');
-//
-// 				// tenant Object
-// 				expect(form.settings.tenant).to.be.an('object');
-// 				expect(form.settings.tenant._id).to.be.an('number');
-// 				expect(form.settings.tenant.api_key).to.be.a('string');
-// 				expect(form.settings.tenant.domain).to.be.a('string');
-//
-// 				// expect(form.settings.trigger).to.be.a('object');
-// 				expect(form.settings.updated_at).to.be.a('string');
-//
-// 				// url_conditions array
-// 				expect(form.settings.url_conditions).to.be.an('array');
-// 				expect(form.settings.url_conditions).to.be.an('array');
-// 				expect(form.settings.url_conditions[0]._id).to.be.a('string');
-// 				expect(form.settings.url_conditions[0].match_type).to.be.a('string');
-// 				expect(form.settings.url_conditions[0].value).to.be.a('string');
-//
-// 				// variations array
-// 				expect(form.settings.variations).to.be.an('array');
-//
-// 			});
-// 		});
-//
-// 	});
-//
-// 	describe('load variation', function () {
-//
-// 		var form = window.madkudu.forms[0];
-//
-// 		it('should instantiate a variation', function () {
-//
-// 			expect(form.variation).to.be.an('object');
-// 			var actions = ['load', 'qualify', 'qualify_results', 'qualified', 'not_qualified', 'request', 'signup'];
-// 			_.each(actions, action => {
-// 				expect(form.variation['on_' + action]).to.be.an('object');
-// 				expect(form['_on_' + action]).to.be.a('function');
-// 				expect(form['on_' + action]).to.be.a('function');
-// 			});
-//
-// 		});
-// 	});
-//
-// });
 
+const chai = require('chai');
+const expect = chai.expect;
+const sinon = require('sinon');
+const _ = require('lodash');
 
-// const sinon = require('sinon');
-//
-// describe('madkudu / form - logic', function () {
-//
-// 	var form = window.madkudu.forms[0];
-//
-// 	describe('qualify', function () {
-//
-// 		it('should call the users qualify function ', function () {
-// 			// Fake the function call
-// 			var stub_user_qualify = sinon.stub(form.madkudu.user(), 'qualify', function (cb) {
-// 				// Check if the qualify is called with a function
-// 				expect(cb).to.be.a('function');
-// 			});
-//
-// 			var stub_track = sinon.stub(form, 'track', function (res) {
-// 				// Check if the parameter of the function
-// 				expect(res).to.be.a('string');
-// 			});
-//
-// 			var stub_on_qualify = sinon.stub(form, 'on_qualify');
-//
-// 			// Call the function to test
-// 			form.qualify({ email: 'elon@tesla.com' });
-//
-// 			// Check if all happening correctly
-// 			sinon.assert.calledOnce(stub_user_qualify);
-// 			sinon.assert.calledOnce(stub_track);
-// 			sinon.assert.calledOnce(stub_on_qualify);
-//
-// 			// Restore the functions
-// 			stub_user_qualify.restore();
-// 			stub_track.restore();
-// 			stub_on_qualify.restore();
-//
-// 		});
-// 	});
-//
-// 	describe('qualify_callback', function () {
-//
-// 		it('should call qualify_results', function () {
-// 			var stub_track = sinon.stub(form, 'track', function (res, obj) {
-// 				// Check if the parameters of the function
-// 				expect(res).to.be.a('string');
-// 				expect(obj).to.be.an('object');
-// 				expect(obj).property('customer_fit_segment');
-// 				expect(obj).property('qualified');
-// 			});
-//
-// 			// call the function to test
-// 			form.qualify_results('abc');
-//
-// 			// Check if all happening correctly
-// 			sinon.assert.calledOnce(stub_track);
-//
-// 			stub_track.restore();
-//
-// 		});
-// 	});
-// });
+const Form = require('../../lib/form');
+const madkudu = require('../../lib');
+const MadKudu = madkudu.constructor;
+
+var user = madkudu.user();
+
+describe('form', function () {
+
+	describe('Form', function () {
+
+		var madkudu;
+
+		beforeEach(function () {
+			madkudu = new MadKudu();
+			madkudu.timeout(0);
+		});
+
+		// afterEach(function () {
+		// 	user.reset();
+		// 	user.anonymousId(null);
+		// });
+
+		it('should have a reference to the parent madkudu object', function () {
+			var form = new Form(madkudu);
+			expect(form.madkudu).to.equal(madkudu);
+		});
+
+		it('should instantiate correctly with incomplete settings', function () {
+			const settings = { trigger: { js: '(function () {})();' } };
+			var form = new Form(madkudu);
+			expect(form.madkudu).to.equal(madkudu, settings);
+		});
+
+	});
+
+	describe('#init', function () {
+
+		var madkudu;
+
+		beforeEach(function () {
+			madkudu = new MadKudu();
+			madkudu.timeout(0);
+		});
+
+		it('should call the initialization methods', function () {
+			var form = new Form(madkudu);
+			form.initialize_variation = sinon.spy();
+			form.initialize_events = sinon.spy();
+			form.init();
+			sinon.assert.called(form.initialize_events);
+			sinon.assert.called(form.initialize_variation);
+		});
+
+		it('should emit initialized', function (done) {
+			var form = new Form(madkudu);
+			form.on('initialized', () => {
+				done();
+			});
+			form.init();
+		});
+
+	});
+
+	describe('#initialize_variation', function () {
+
+		var madkudu;
+
+		beforeEach(function () {
+			madkudu = new MadKudu();
+			madkudu.timeout(0);
+		});
+
+		it('should return if no variations', function () {
+			var form = new Form(madkudu);
+			expect(form.initialize_variation()).to.equal(form);
+		});
+
+		it('should not instantiate a trigger if no variation provided', function () {
+			const settings = { trigger: { js: '(function () {})();' } };
+			var form = new Form(madkudu, settings);
+			form.initialize_variation();
+			expect(form._trigger).to.be.an('undefined');
+		});
+
+		it('should instantiate a trigger and variation', function () {
+			const settings = { trigger: { js: '(function () {})();' }, variations: [ { name: 'variation ' } ] };
+			var form = new Form(madkudu, settings);
+			form.initialize_variation();
+			expect(form._trigger).to.be.a('function');
+			expect(form.trigger).to.be.a('function');
+			expect(form._on_qualify).to.be.a('function');
+			expect(form.on_qualify).to.be.a('function');
+			expect(form._on_qualify_results).to.be.a('function');
+			expect(form.on_qualify_results).to.be.a('function');
+			expect(form._on_qualified).to.be.a('function');
+			expect(form.on_qualified).to.be.a('function');
+			expect(form._on_request).to.be.a('function');
+			expect(form.on_request).to.be.a('function');
+		});
+
+	});
+
+	describe('#initialize_events', function () {
+
+		it('should instantiate event listener for each events', function (done) {
+			const settings = { trigger: { js: '(function () {})();' }, variations: [ { name: 'variation ' } ] };
+			var form = new Form(madkudu, settings);
+			form.init();
+			const properties = { a: 'b' };
+			form.on('qualify', props => {
+				expect(props).to.equal(properties);
+				done();
+			});
+			form.emit('qualify', properties);
+		});
+
+	});
+
+	describe('#start', function () {
+
+		var form;
+
+		beforeEach(function () {
+			const settings = { trigger: { js: '(function () {})();' }, variations: [ { name: 'variation ' } ] };
+			form = new Form(madkudu, settings);
+			form.init();
+		});
+
+		it('should call load if verify_location returns true', function () {
+			form.verify_location = sinon.stub().returns(true);
+			form.load = sinon.spy();
+			form.start();
+			sinon.assert.called(form.load);
+		});
+
+		it('should not call load if verify_location returns false', function () {
+			form.verify_location = sinon.stub().returns(false);
+			form.load = sinon.spy();
+			form.start();
+			sinon.assert.notCalled(form.load);
+		});
+
+	});
+
+	describe('#load', function () {
+
+		var form;
+
+		beforeEach(function () {
+			const settings = { trigger: { js: '(function () {})();' }, variations: [ { name: 'variation ' } ] };
+			form = new Form(madkudu, settings);
+			form.init();
+		});
+
+		it('should call the form if not already loaded', function () {
+			sinon.spy(form, 'on_load');
+			sinon.spy(form, 'track');
+			sinon.spy(form, 'parse_query_string');
+			sinon.spy(form, 'trigger');
+			form.load();
+			sinon.assert.called(form.on_load);
+			sinon.assert.calledWith(form.track, 'loaded');
+			sinon.assert.called(form.parse_query_string);
+			sinon.assert.called(form.trigger);
+		});
+
+		it('should call each method only once', function () {
+			sinon.spy(form, 'on_load');
+			sinon.spy(form, 'track');
+			sinon.spy(form, 'parse_query_string');
+			sinon.spy(form, 'trigger');
+			form.load();
+			form.load();
+			sinon.assert.calledOnce(form.on_load);
+			sinon.assert.calledOnce(form.track);
+			sinon.assert.calledOnce(form.parse_query_string);
+			sinon.assert.calledOnce(form.trigger);
+		});
+
+	});
+
+	describe('#actions', function () {
+
+		var form;
+
+		beforeEach(function () {
+			const settings = { trigger: { js: '(function () {})();' }, variations: [ { name: 'variation ' } ] };
+			form = new Form(madkudu, settings);
+			form.init();
+		});
+
+		it('should call the corresponding user-defined method', function () {
+			_.each(['request', 'qualified', 'not_qualified', 'qualify_results'], action => {
+				sinon.spy(form, 'on_' + action);
+				form[action]();
+				sinon.assert.called(form['on_' + action]);
+			});
+		});
+
+	});
+
+	describe('#set_email', function () {
+
+		var form;
+		var madkudu;
+
+		beforeEach(function () {
+			madkudu = new MadKudu();
+			madkudu.timeout(0);
+		});
+
+		beforeEach(function () {
+			const settings = { trigger: { js: '(function () {})();' }, variations: [ { name: 'variation ' } ] };
+			form = new Form(madkudu, settings);
+			form.init();
+		});
+
+		afterEach(function () {
+			user.reset();
+			user.anonymousId(null);
+		});
+
+		it('should set the email ', function () {
+			const email = 'test@madkudu.com';
+			form.set_email(email);
+			expect(form.email).to.equal(email);
+		});
+
+		it('should call identify with the email', function () {
+			const email = 'test@madkudu.com';
+			sinon.spy(madkudu, 'identify');
+			form.set_email(email);
+			sinon.assert.calledWith(madkudu.identify, { email: email });
+		});
+
+		it('should set the the email trait of the user', function () {
+			const email = 'test@madkudu.com';
+			expect(user.traits()).to.deep.equal({});
+			form.set_email(email);
+			expect(user.traits()).to.deep.equal({ email: email });
+		});
+
+	});
+
+	describe('#is_email', function () {
+
+		var form;
+
+		beforeEach(function () {
+			const settings = { trigger: { js: '(function () {})();' }, variations: [ { name: 'variation ' } ] };
+			form = new Form(madkudu, settings);
+			form.init();
+		});
+
+		it('should return true for a valid email', function () {
+			expect(form.is_email('test@madkudu.com')).to.be.true;
+		});
+
+		it('should return false for an invalid email', function () {
+			expect(form.is_email('test.madkudu.com')).to.be.false;
+		});
+
+	});
+
+});
