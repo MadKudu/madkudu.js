@@ -4,35 +4,14 @@ var chai = require('chai');
 var expect = chai.expect;
 const _ = require('lodash');
 
-describe('madkudu', function () {
+var madkudu = require('../../lib');
 
-	var madkudu;
+describe('index.js', function () {
 
-	// reset window.madkudu and call page
-	before(function () {
-		var mdkd = window.madkudu = [];
-		mdkd.methods = ['identify', 'reset', 'group', 'ready', 'page', 'track', 'once', 'on', 'smart_form'];
-		mdkd.factory = function (t) {
-			return function () {
-				var e = Array.prototype.slice.call(arguments);
-				e.unshift(t);
-				mdkd.push(e);
-				return mdkd;
-
-			};
-		};
-		for (var t = 0; t < mdkd.methods.length; t++) {
-			var e = mdkd.methods[t];
-			mdkd[e] = mdkd.factory(e);
-		}
-		mdkd.page();
-
-		madkudu = require('../../lib');
-
-	});
-
-	it('should expose a .VERSION', function () {
-		expect(madkudu.VERSION).to.be.a('string');
+	describe('VERSION', function () {
+		it('should expose a .VERSION', function () {
+			expect(madkudu.VERSION).to.be.a('string');
+		});
 	});
 
 	describe('window', function () {
@@ -53,6 +32,74 @@ describe('madkudu', function () {
 			});
 
 		});
+
+	});
+
+	describe('replay', function () {
+
+		// reset window.madkudu and call page
+		// this only verifies that the thing doesn't error
+		// TODO: find a way to mock the method to verify it's been called
+		it('should replay the methods once loaded', function () {
+
+			var mdkd = window.madkudu = [];
+			mdkd.methods = ['identify', 'reset', 'group', 'ready', 'page', 'track', 'once', 'on', 'smart_form'];
+			mdkd.factory = function (t) {
+				return function () {
+					var e = Array.prototype.slice.call(arguments);
+					e.unshift(t);
+					mdkd.push(e);
+					return mdkd;
+
+				};
+			};
+			for (var t = 0; t < mdkd.methods.length; t++) {
+				var e = mdkd.methods[t];
+				mdkd[e] = mdkd.factory(e);
+			}
+			mdkd.page();
+
+			// reset the cache to force a reload of window.madkudu
+			delete require.cache[require.resolve('../../lib')];
+			madkudu = require('../../lib');
+
+			expect(1).to.equal(1);
+
+		});
+
+		it('should work if an fake method is called', function () {
+
+			var mdkd = window.madkudu = [];
+			mdkd.methods = ['identify', 'reset', 'group', 'ready', 'page', 'track', 'once', 'on', 'smart_form', 'fake_method'];
+			mdkd.factory = function (t) {
+				return function () {
+					var e = Array.prototype.slice.call(arguments);
+					e.unshift(t);
+					mdkd.push(e);
+					return mdkd;
+
+				};
+			};
+			for (var t = 0; t < mdkd.methods.length; t++) {
+				var e = mdkd.methods[t];
+				mdkd[e] = mdkd.factory(e);
+			}
+
+			mdkd.fake_method();
+
+			// reset the cache to force a reload of window.madkudu
+			delete require.cache[require.resolve('../../lib')];
+			madkudu = require('../../lib');
+
+			expect(1).to.equal(1);
+
+		});
+
+	});
+
+	describe('reset', function () {
+
+
 
 	});
 
