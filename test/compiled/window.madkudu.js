@@ -43,6 +43,5 @@ describe('settings', function () {
 		expect(madkudu.settings.form).to.be.an('object');
 		expect(madkudu.settings.form.active).to.be.a('boolean');
 		expect(madkudu.settings.form.campaigns).to.be.an('array');
-		expect(madkudu.settings.form.has_campaigns).to.be.an('boolean');
 	});
 });
