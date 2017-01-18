@@ -240,10 +240,6 @@ describe('MadKudu', function () {
 			});
 		});
 
-		it('should return the user if no argument', function () {
-			assert(madkudu.user() === madkudu.identify());
-		});
-
 	});
 
 	describe('#group', function () {
