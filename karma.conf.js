@@ -33,12 +33,9 @@ module.exports = function (config) {
 					{ pattern: 'test/support/setup.js', watched: true },
 					{ pattern: 'dist/madkudu.min.js', watched: true },
 					{ pattern: 'test/support/teardown.js', watched: true },
-					{ pattern: 'test/compiled/jquery.js', watched: true }
+					{ pattern: 'test/compiled/window.jquery.js', watched: true }
 				];
 			} else if (test_type === 'segment') {
-				if (!SEGMENT_API_KEY) {
-					throw new Error('Need a SEGMENT_API_KEY as environment variable');
-				}
 				return [
 					{ pattern: 'test/support/segment.js', watched: true },
 					{ pattern: 'test/compiled/window.analytics.js', watched: true }
