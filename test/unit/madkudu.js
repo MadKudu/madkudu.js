@@ -7,7 +7,6 @@ var expect = chai.expect;
 var sinon = require('sinon');
 
 var madkudu = require('../../lib');
-
 var MadKudu = madkudu.constructor;
 var tick = require('next-tick');
 var protocol = require('@segment/protocol');
@@ -667,13 +666,15 @@ describe('MadKudu', function () {
 			sinon.assert.calledOnce(madkudu.smart_form);
 		});
 
-		it('should call initialize on each form', function () {
-			var init = sinon.spy();
-			madkudu.forms = [{ init: init }, { init: init }];
-			madkudu.smart_form();
-			sinon.assert.calledTwice(init);
-		});
+	});
 
+	describe('#_start_forms', function () {
+		it('should call start on each form', function () {
+			var start = sinon.spy();
+			madkudu.forms = [{ start: start }, { start: start }];
+			madkudu._start_forms();
+			sinon.assert.calledTwice(start);
+		});
 	});
 
 	describe('#_init_form', function () {
@@ -718,7 +719,7 @@ describe('MadKudu', function () {
 			sinon.assert.notCalled(madkudu._init_form);
 		});
 
-		it('should not call init_form for each campaign', function () {
+		it('should call init_form for each campaign', function () {
 
 			sinon.stub(madkudu, '_init_form');
 
