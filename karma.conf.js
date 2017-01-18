@@ -45,7 +45,7 @@ module.exports = function (config) {
 				}
 				return [
 					{ pattern: 'test/support/segment.js', watched: true },
-					{ pattern: 'test/compiled/segment.js', watched: true },
+					{ pattern: 'test/compiled/segment.js', watched: true }
 				];
 			} else if (test_type === 'require') {
 				return [
