@@ -7,7 +7,6 @@ describe('window.madkudu', function () {
 
 	it('should emit the ready callback', function (done) {
 		window.madkudu.ready(function () {
-			console.log('MadKudu is ready');
 			done();
 		});
 	});

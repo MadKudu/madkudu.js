@@ -8,7 +8,6 @@ describe('jquery', function () {
 	before(function (done) {
 		// Wait the loading of analytics.js
 		window.madkudu.ready(function () {
-			console.log('MadKudu is ready');
 			done();
 		});
 	});
