@@ -94,10 +94,10 @@ module.exports = function (config) {
 		// start these browsers
 		// available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
 		browsers: (function () {
-			if (CI === 'true') {
-				return ['Chrome', 'Firefox'];
-			} else if (DEV === 'true' && test_type === 'stripe') {
-				return ['Chrome_without_security'];
+			if (process.env.BROWSERS) {
+				return process.env.BROWSERS.split(',');
+			} else if (CI === 'true') {
+				return ['Chrome', 'PhantomJS', 'Firefox'];
 			} else if (DEV === 'true') {
 				return ['Chrome'];
 			} else {

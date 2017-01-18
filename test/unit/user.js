@@ -522,20 +522,31 @@ describe('user', function () {
 
 	describe('#predict', function () {
 
+		before(function () {
+			sinon.spy(window.madkudu, 'predict');
+		});
+
 		it('should pass the user traits to madkudu.predict', function () {
 			const traits = { email: 'test@madkudu.com' };
 			user.traits = sinon.stub().returns(traits);
-			user.madkudu.predict = sinon.spy();
 
 			user.predict();
 
 			sinon.assert.called(user.traits);
-			sinon.assert.calledWith(user.madkudu.predict, { email: traits.email }, undefined);
+			sinon.assert.calledWith(window.madkudu.predict, { email: traits.email }, undefined);
+		});
+
+		after(function () {
+			window.madkudu.predict.restore();
 		});
 
 	});
 
 	describe('#qualify', function () {
+
+		before(function () {
+			sinon.stub(window.madkudu, 'predict');
+		});
 
 		it('should call predict', function () {
 			user.predict = sinon.spy();
@@ -555,7 +566,7 @@ describe('user', function () {
 			};
 
 			user.identify = sinon.spy();
-			user.madkudu.predict = sinon.stub().callsArgWith(1, null, results);
+			window.madkudu.predict.callsArgWith(1, null, results);
 
 			user.qualify();
 
@@ -566,7 +577,7 @@ describe('user', function () {
 		it('should work if predict does not return results', function () {
 
 			user.identify = sinon.spy();
-			user.madkudu.predict = sinon.stub().callsArgWith(1, null, null);
+			window.madkudu.predict.callsArgWith(1, null, null);
 
 			user.qualify();
 
@@ -579,7 +590,7 @@ describe('user', function () {
 			const results = {};
 
 			const callback = sinon.spy();
-			user.madkudu.predict = sinon.stub().callsArgWith(1, null, results);
+			window.madkudu.predict.callsArgWith(1, null, results);
 
 			user.qualify(callback);
 
@@ -592,12 +603,16 @@ describe('user', function () {
 			const err = new Error('test');
 
 			const callback = sinon.spy();
-			user.madkudu.predict = sinon.stub().callsArgWith(1, err);
+			window.madkudu.predict.callsArgWith(1, err);
 
 			user.qualify(callback);
 
 			sinon.assert.calledWith(callback, err);
 
+		});
+
+		after(function () {
+			window.madkudu.predict.restore();
 		});
 
 	});
