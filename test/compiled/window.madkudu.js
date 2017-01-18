@@ -5,6 +5,13 @@ var expect = chai.expect;
 
 describe('window.madkudu', function () {
 
+	before(function (done) {
+		window.madkudu.ready(function () {
+			console.log('MadKudu is ready');
+			done();
+		});
+	});
+
 	it('should have loaded madkudu into window.madkudu', function () {
 		expect(window.madkudu).to.be.an('object');
 	});
@@ -13,11 +20,6 @@ describe('window.madkudu', function () {
 		var madkudu = window.madkudu;
 
 		expect(madkudu.VERSION).to.be.a('string');
-
-		// Objects
-		expect(madkudu.options).to.be.an('object');
-		expect(madkudu.settings).to.be.an('object');
-		expect(madkudu.settings.api_key).to.be.an('string');
 
 		// Array
 		expect(madkudu.forms).to.be.an('array');

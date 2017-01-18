@@ -8,7 +8,7 @@ const _ = require('lodash');
 const DEFAULT_WEBPACK_CONFIG = require('./webpack.config');
 
 const test_type = process.env.TESTS || 'unit';
-const SEGMENT_API_KEY = process.env.SEGMENT_API_KEY;
+const SEGMENT_API_KEY = process.env.SEGMENT_API_KEY || null;
 
 console.log(test_type);
 
@@ -26,7 +26,7 @@ module.exports = function (config) {
 					{ pattern: 'test/support/setup.js', watched: true },
 					{ pattern: 'dist/madkudu.min.js', watched: true },
 					{ pattern: 'test/support/teardown.js', watched: true },
-					{ pattern: 'test/compiled/mk_window_changes.js', watched: true },
+					{ pattern: 'test/compiled/window_changes.js', watched: true },
 					{ pattern: 'test/compiled/window.madkudu.js', watched: true }
 				];
 			} else if (test_type === 'jquery') {
@@ -37,28 +37,24 @@ module.exports = function (config) {
 					{ pattern: 'test/support/setup.js', watched: true },
 					{ pattern: 'dist/madkudu.min.js', watched: true },
 					{ pattern: 'test/support/teardown.js', watched: true },
-					{ pattern: 'test/compiled/window.madkudu.js', watched: true }
+					{ pattern: 'test/compiled/jquery.js', watched: true }
 				];
 			} else if (test_type === 'segment') {
+				if (!SEGMENT_API_KEY) {
+					throw new Error('Need a SEGMENT_API_KEY as environment variable');
+				}
 				return [
-					{ pattern: 'test/support/setup.js', watched: true },
 					{ pattern: 'test/support/segment.js', watched: true },
-					{ pattern: 'test/support/teardown.js', watched: true },
-					{ pattern: 'test/compiled/analytics_is_ready.js', watched: true },
-					{ pattern: 'test/compiled/window.madkudu.js', watched: true }
+					{ pattern: 'test/compiled/segment.js', watched: true },
 				];
 			} else if (test_type === 'require') {
 				return [
 					{ pattern: 'dist/madkudu.min.js', watched: true, included: false },
-					{ pattern: 'test/support/setup.js', watched: true },
 					{ pattern: 'https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.2/require.js' },
 					{ pattern: 'test/support/require_main.js' },
-					{ pattern: 'test/support/teardown.js', watched: true },
-					{ pattern: 'test/compiled/madkudu_is_ready.js', watched: true },
 					{ pattern: 'test/compiled/window.madkudu.js', watched: true }
 				];
-			}
-			else {
+			} else if (test_type === 'unit') {
 				return [
 					{ pattern: 'test/support/setup.js', watched: true },
 					{ pattern: 'test/unit/*.js', watched: true },
@@ -111,7 +107,8 @@ module.exports = function (config) {
 
 		// level of logging
 		// possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
-		logLevel: config.LOG_INFO,
+		// logLevel: config.LOG_INFO,
+		logLevel: config.DEBUG,
 
 		// enable / disable watching file and executing tests whenever any file changes
 		autoWatch: DEV === 'true',
@@ -151,6 +148,7 @@ module.exports = function (config) {
 		concurrency: Infinity,
 
 		client: {
+			captureConsole: true,
 			mocha: {
 				grep: process.env.GREP,
 				reporter: 'html',
