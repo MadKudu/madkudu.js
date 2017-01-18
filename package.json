@@ -31,7 +31,7 @@
     "test-unit": "NODE_ENV=test TESTS=unit ./node_modules/karma/bin/karma start karma.conf.js",
     "test-compiled": "NODE_ENV=test TESTS=compiled ./node_modules/karma/bin/karma start karma.conf.js",
 	"test-unit": "NODE_ENV=test TESTS=unit npm run karma",
-	"test-functional": "npm run compile && npm run test-compiled && npm run test-jquery && npm run test-require",
+	"test-functional": "npm run compile && npm run test-compiled && npm run test-require",
     "test-compiled": "NODE_ENV=test TESTS=compiled npm run karma",
     "test-jquery": "NODE_ENV=test TESTS=jquery npm run karma",
     "test-require": "NODE_ENV=test TESTS=require npm run karma",
