@@ -27,8 +27,8 @@ module.exports = {
 			} // without this, loading json3 modifies window.JSON (see https://github.com/webpack/docs/wiki/shimming-modules#disable-some-module-styles)
 		],
 		noParse: [
-			require('path').join(__dirname, 'node_modules', 'jquery'),
-			require('path').join(__dirname, 'node_modules', 'next-tick') // if we parse nextTick, webpack adds a bunch of polyfills (setImmediate) that modify the window object. not cool.
+			/jquery/,
+			/next-tick/ // if we parse nextTick, webpack adds a bunch of polyfills (setImmediate) that modify the window object. not cool.
 		]
 	},
 	devtool: 'cheap-source-map',

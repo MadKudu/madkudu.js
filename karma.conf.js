@@ -3,9 +3,8 @@
 const CI = process.env.CI;
 const DEV = process.env.DEV;
 
-const webpack = require('webpack');
-const _ = require('lodash');
-const DEFAULT_WEBPACK_CONFIG = require('./webpack.config');
+const DEFAULT_SETTINGS = require('./utils/default_settings');
+const get_webpack_config = require('./utils/get_webpack_config');
 
 const test_type = process.env.TESTS || 'unit';
 
@@ -25,9 +24,30 @@ module.exports = function (config) {
 					{ pattern: 'test/support/setup.js', watched: true },
 					{ pattern: 'dist/madkudu.min.js', watched: true },
 					{ pattern: 'test/support/teardown.js', watched: true },
-					{ pattern: 'test/compiled/*.js', watched: true }
+					{ pattern: 'test/compiled/window_changes.js', watched: true },
+					{ pattern: 'test/compiled/window.madkudu.js', watched: true }
 				];
-			} else {
+			} else if (test_type === 'jquery') {
+				return [
+					{ pattern: 'https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js', watched: false },
+					{ pattern: 'test/support/setup.js', watched: true },
+					{ pattern: 'dist/madkudu.min.js', watched: true },
+					{ pattern: 'test/support/teardown.js', watched: true },
+					{ pattern: 'test/compiled/window.jquery.js', watched: true }
+				];
+			} else if (test_type === 'segment') {
+				return [
+					{ pattern: 'test/support/segment.js', watched: true },
+					{ pattern: 'test/compiled/window.analytics.js', watched: true }
+				];
+			} else if (test_type === 'require') {
+				return [
+					{ pattern: 'dist/madkudu.min.js', watched: true, included: false },
+					{ pattern: 'https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.2/require.js' },
+					{ pattern: 'test/support/require_main.js' },
+					{ pattern: 'test/compiled/window.madkudu.js', watched: true }
+				];
+			} else if (test_type === 'unit') {
 				return [
 					{ pattern: 'test/support/setup.js', watched: true },
 					{ pattern: 'test/unit/*.js', watched: true },
@@ -47,24 +67,7 @@ module.exports = function (config) {
 			'test/**/support/*.js': ['webpack']
 		},
 
-		webpack: (function () {
-			const webpack_conf = _.cloneDeep(DEFAULT_WEBPACK_CONFIG);
-
-			webpack_conf.output = {
-				libraryTarget: 'var'
-			};
-
-			webpack_conf.plugins.push(
-				new webpack.DefinePlugin({
-					__3313__: JSON.stringify(false),
-					__CAMPAIGNS__: JSON.stringify(false),
-					__SETTINGS__: JSON.stringify({})
-				})
-			);
-
-			return webpack_conf;
-
-		})(),
+		webpack: get_webpack_config(DEFAULT_SETTINGS, { test: true }),
 
 		// test results reporter to use
 		// possible values: 'dots', 'progress'
@@ -79,7 +82,8 @@ module.exports = function (config) {
 
 		// level of logging
 		// possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
-		logLevel: config.LOG_INFO,
+		// logLevel: config.LOG_INFO,
+		logLevel: config.DEBUG,
 
 		// enable / disable watching file and executing tests whenever any file changes
 		autoWatch: DEV === 'true',
@@ -92,12 +96,23 @@ module.exports = function (config) {
 		browsers: (function () {
 			if (CI === 'true') {
 				return ['Chrome', 'Firefox'];
+			} else if (DEV === 'true' && test_type === 'stripe') {
+				return ['Chrome_without_security'];
 			} else if (DEV === 'true') {
 				return ['Chrome'];
 			} else {
 				return ['Chrome', 'Firefox', 'Safari'];
 			}
 		})(),
+
+		// custom flag
+		// disable chrome security
+		customLaunchers: {
+			Chrome_without_security: {
+				base: 'Chrome',
+				flags: ['--disable-web-security']
+			}
+		},
 
 		// Continuous Integration mode
 		// if true, Karma captures browsers, runs the tests and exits
@@ -108,6 +123,7 @@ module.exports = function (config) {
 		concurrency: Infinity,
 
 		client: {
+			captureConsole: true,
 			mocha: {
 				grep: process.env.GREP,
 				reporter: 'html',

@@ -68,7 +68,7 @@ describe('MadKudu', function () {
 		it('should set options', function () {
 			madkudu._options = sinon.spy();
 			madkudu.initialize({}, { option: true });
-			assert(madkudu._options.calledWith({ option: true }));
+			sinon.assert.calledWith(madkudu._options, { option: true });
 		});
 
 		it('should set analytics._readied to true', function (done) {
@@ -81,7 +81,7 @@ describe('MadKudu', function () {
 
 		it('should call #load on the user', function () {
 			madkudu.initialize();
-			assert(user.load.called);
+			sinon.assert.called(user.load);
 		});
 
 		it('should emit initialize', function (done) {
@@ -97,6 +97,15 @@ describe('MadKudu', function () {
 			});
 			madkudu.initialize(null, { initialPageview: true });
 		});
+
+		it('should only initialize once', function () {
+			madkudu._init_forms = sinon.spy();
+			madkudu.smart_form = sinon.spy();
+			madkudu.initialize();
+			sinon.assert.calledOnce(madkudu._init_forms);
+			sinon.assert.calledOnce(user.load);
+		});
+
 	});
 
 	describe('#ready', function () {
@@ -212,15 +221,12 @@ describe('MadKudu', function () {
 	});
 
 	describe('#identify', function () {
+
 		it('should call user.identify with traits', function () {
-
 			var user = madkudu.user();
-
 			user.identify = sinon.stub();
-
 			var traits = { trait: true };
 			madkudu.identify('id', traits);
-
 			sinon.assert.calledWith(user.identify, 'id', traits);
 		});
 
@@ -234,14 +240,47 @@ describe('MadKudu', function () {
 				done();
 			});
 		});
+
+		it('should return the user if no argument', function () {
+			assert(madkudu.user() === madkudu.identify());
+		});
+
 	});
+
+	describe('#group', function () {
+
+		it('should call user.group with traits', function () {
+			var user = madkudu.user();
+			user.group = sinon.stub();
+			var traits = { trait: true };
+			madkudu.group('id', traits);
+			sinon.assert.calledWith(user.group, 'id', traits);
+		});
+
+		it('should callback after a timeout', function (done) {
+			var spy = sinon.spy();
+			var traits = { trait: true };
+			madkudu.group('id', traits, null, spy);
+			assert(!spy.called);
+			tick(function () {
+				assert(spy.called);
+				done();
+			});
+		});
+
+		it('should return the user if no argument', function () {
+			assert(madkudu.group() === madkudu.group());
+		});
+
+	});
+
 
 	describe('#track', function () {
 		beforeEach(function () {
 			sinon.stub(madkudu, 'send');
 		});
 
-		it('should send an event and properties', function () {
+		it('should send event / properties / context', function () {
 			madkudu.track('event', { prop: true }, { opt: true });
 			var args = madkudu.send.args[0];
 			assert(args[0] === '/track');
@@ -250,6 +289,16 @@ describe('MadKudu', function () {
 			assert(args[1].properties.prop === true);
 			assert(args[1].traits == null);
 		});
+
+		it('should assign a default context', function () {
+			madkudu.track('event', { prop: true });
+			var args = madkudu.send.args[0];
+			assert(args[0] === '/track');
+			assert(args[1].event === 'event');
+			assert(args[1].properties.prop === true);
+			assert(args[1].traits == null);
+		});
+
 	});
 
 	describe('#send', function () {

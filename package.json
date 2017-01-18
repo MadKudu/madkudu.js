@@ -1,7 +1,7 @@
 {
   "name": "@madkudu/madkudu.js",
   "author": "MadKudu <engineering@madkudu.com>",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "license": "SEE LICENSE IN LICENSE",
   "description": "The MadKudu javascript library",
   "keywords": [
@@ -27,9 +27,16 @@
     "dev": "node ./node_modules/.bin/pm2-dev start app.js --ignore 'dist'",
     "lint": "./node_modules/eslint/bin/eslint.js lib/ ./node_modules/eslint/bin/eslint.js test/",
     "compile": "node utils/run_compiler",
-    "test": "npm run lint && npm run test-unit && npm run compile && npm run test-compiled",
+    "test": "npm run lint && npm run test-unit && npm run test-functional",
     "test-unit": "NODE_ENV=test TESTS=unit ./node_modules/karma/bin/karma start karma.conf.js",
     "test-compiled": "NODE_ENV=test TESTS=compiled ./node_modules/karma/bin/karma start karma.conf.js",
+	"test-unit": "NODE_ENV=test TESTS=unit npm run karma",
+	"test-functional": "npm run compile && npm run test-compiled && npm run test-require",
+    "test-compiled": "NODE_ENV=test TESTS=compiled npm run karma",
+    "test-jquery": "NODE_ENV=test TESTS=jquery npm run karma",
+    "test-require": "NODE_ENV=test TESTS=require npm run karma",
+	"test-segment": "NODE_ENV=test TESTS=segment npm run karma",
+    "karma": "./node_modules/karma/bin/karma start karma.conf.js",
 	"coverage": "./node_modules/codeclimate-test-reporter/bin/codeclimate.js < 'dist/coverage/unit/Chrome 55.0.2883 (Mac OS X 10.12.2)/lcov.info'"
   },
   "dependencies": {
@@ -90,7 +97,7 @@
     "babel-plugin-istanbul": "3.1.2",
     "chai": "3.5.0",
     "eslint": "3.12.2",
-    "eslint-plugin-mocha": "^4.8.0",
+    "eslint-plugin-mocha": "4.8.0",
     "mocha": "3.2.0",
     "sinon": "2.0.0-pre.5"
   }

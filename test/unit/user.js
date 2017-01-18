@@ -2,6 +2,7 @@
 
 var chai = require('chai');
 var assert = chai.assert;
+var expect = chai.expect;
 
 var rawCookie = require('component-cookie');
 var sinon = require('sinon');
@@ -489,4 +490,117 @@ describe('user', function () {
 		});
 
 	});
+
+	describe('#_is_qualified', function () {
+
+		it('should return true for good / very good', function () {
+			expect(user._is_qualified('good')).to.equal(true);
+			expect(user._is_qualified('very good')).to.equal(true);
+		});
+
+		it('should return false otherwise', function () {
+			expect(user._is_qualified('medium')).to.equal(false);
+			expect(user._is_qualified('low')).to.equal(false);
+			expect(user._is_qualified('foo')).to.equal(false);
+		});
+
+	});
+
+	describe('#is_qualified', function () {
+
+		it('should return true for good / very good', function () {
+			user.identify(user.id(), { customer_fit_segment: 'good' });
+			expect(user.is_qualified()).to.equal(true);
+		});
+
+		it('should return false otherwise', function () {
+			user.identify(user.id(), { customer_fit_segment: 'low' });
+			expect(user.is_qualified()).to.equal(false);
+		});
+
+	});
+
+	describe('#predict', function () {
+
+		it('should pass the user traits to madkudu.predict', function () {
+			const traits = { email: 'test@madkudu.com' };
+			user.traits = sinon.stub().returns(traits);
+			user.madkudu.predict = sinon.spy();
+
+			user.predict();
+
+			sinon.assert.called(user.traits);
+			sinon.assert.calledWith(user.madkudu.predict, { email: traits.email }, undefined);
+		});
+
+	});
+
+	describe('#qualify', function () {
+
+		it('should call predict', function () {
+			user.predict = sinon.spy();
+			user.qualify();
+			sinon.assert.called(user.predict);
+		});
+
+		it('should call identify with the results', function () {
+
+			const results = {
+				domain: 'madkudu.com',
+				customer_fit: {
+					segment: 'very good',
+				},
+				company: {},
+				person: {},
+			};
+
+			user.identify = sinon.spy();
+			user.madkudu.predict = sinon.stub().callsArgWith(1, null, results);
+
+			user.qualify();
+
+			sinon.assert.called(user.identify);
+
+		});
+
+		it('should work if predict does not return results', function () {
+
+			user.identify = sinon.spy();
+			user.madkudu.predict = sinon.stub().callsArgWith(1, null, null);
+
+			user.qualify();
+
+			sinon.assert.called(user.identify);
+
+		});
+
+		it('should call the callback if provided', function () {
+
+			const results = {};
+
+			const callback = sinon.spy();
+			user.madkudu.predict = sinon.stub().callsArgWith(1, null, results);
+
+			user.qualify(callback);
+
+			sinon.assert.called(callback);
+
+		});
+
+		it('should pass the error to the callback', function () {
+
+			const err = new Error('test');
+
+			const callback = sinon.spy();
+			user.madkudu.predict = sinon.stub().callsArgWith(1, err);
+
+			user.qualify(callback);
+
+			sinon.assert.calledWith(callback, err);
+
+		});
+
+	});
+
+
 });
