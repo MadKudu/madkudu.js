@@ -8,6 +8,7 @@ const _ = require('lodash');
 const DEFAULT_WEBPACK_CONFIG = require('./webpack.config');
 
 const test_type = process.env.TESTS || 'unit';
+const SEGMENT_API_KEY = process.env.SEGMENT_API_KEY || null;
 
 console.log(test_type);
 
@@ -25,9 +26,33 @@ module.exports = function (config) {
 					{ pattern: 'test/support/setup.js', watched: true },
 					{ pattern: 'dist/madkudu.min.js', watched: true },
 					{ pattern: 'test/support/teardown.js', watched: true },
-					{ pattern: 'test/compiled/*.js', watched: true }
+					{ pattern: 'test/compiled/window_changes.js', watched: true },
+					{ pattern: 'test/compiled/window.madkudu.js', watched: true }
 				];
-			} else {
+			} else if (test_type === 'jquery') {
+				return [
+					{ pattern: 'https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js', watched: false },
+					{ pattern: 'test/support/setup.js', watched: true },
+					{ pattern: 'dist/madkudu.min.js', watched: true },
+					{ pattern: 'test/support/teardown.js', watched: true },
+					{ pattern: 'test/compiled/jquery.js', watched: true }
+				];
+			} else if (test_type === 'segment') {
+				if (!SEGMENT_API_KEY) {
+					throw new Error('Need a SEGMENT_API_KEY as environment variable');
+				}
+				return [
+					{ pattern: 'test/support/segment.js', watched: true },
+					{ pattern: 'test/compiled/segment.js', watched: true }
+				];
+			} else if (test_type === 'require') {
+				return [
+					{ pattern: 'dist/madkudu.min.js', watched: true, included: false },
+					{ pattern: 'https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.2/require.js' },
+					{ pattern: 'test/support/require_main.js' },
+					{ pattern: 'test/compiled/window.madkudu.js', watched: true }
+				];
+			} else if (test_type === 'unit') {
 				return [
 					{ pattern: 'test/support/setup.js', watched: true },
 					{ pattern: 'test/unit/*.js', watched: true },
@@ -58,7 +83,8 @@ module.exports = function (config) {
 				new webpack.DefinePlugin({
 					__3313__: JSON.stringify(false),
 					__CAMPAIGNS__: JSON.stringify(false),
-					__SETTINGS__: JSON.stringify({})
+					__SETTINGS__: JSON.stringify({}),
+					__SEGMENT_API_KEY__: JSON.stringify(SEGMENT_API_KEY)
 				})
 			);
 
@@ -79,7 +105,8 @@ module.exports = function (config) {
 
 		// level of logging
 		// possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
-		logLevel: config.LOG_INFO,
+		// logLevel: config.LOG_INFO,
+		logLevel: config.DEBUG,
 
 		// enable / disable watching file and executing tests whenever any file changes
 		autoWatch: DEV === 'true',
@@ -92,12 +119,23 @@ module.exports = function (config) {
 		browsers: (function () {
 			if (CI === 'true') {
 				return ['Chrome', 'Firefox'];
+			} else if (DEV === 'true' && test_type === 'stripe') {
+				return ['Chrome_without_security'];
 			} else if (DEV === 'true') {
 				return ['Chrome'];
 			} else {
 				return ['Chrome', 'Firefox', 'Safari'];
 			}
 		})(),
+
+		// custom flag
+		// disable chrome security
+		customLaunchers: {
+			Chrome_without_security: {
+				base: 'Chrome',
+				flags: ['--disable-web-security']
+			}
+		},
 
 		// Continuous Integration mode
 		// if true, Karma captures browsers, runs the tests and exits
@@ -108,6 +146,7 @@ module.exports = function (config) {
 		concurrency: Infinity,
 
 		client: {
+			captureConsole: true,
 			mocha: {
 				grep: process.env.GREP,
 				reporter: 'html',
