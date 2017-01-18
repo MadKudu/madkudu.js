@@ -27,7 +27,7 @@
     "dev": "node ./node_modules/.bin/pm2-dev start app.js --ignore 'dist'",
     "lint": "./node_modules/eslint/bin/eslint.js lib/ ./node_modules/eslint/bin/eslint.js test/",
     "compile": "node utils/run_compiler",
-    "test": "npm run lint && npm run test-unit && npm run compile && npm run test-compiled",
+    "test": "npm run lint && npm run test-unit && npm run compile && npm run test-compiled && npm run test-segment",
     "test-unit": "NODE_ENV=test TESTS=unit ./node_modules/karma/bin/karma start karma.conf.js",
     "test-compiled": "NODE_ENV=test TESTS=compiled ./node_modules/karma/bin/karma start karma.conf.js",
 	"test-unit": "NODE_ENV=test TESTS=unit npm run karma",
