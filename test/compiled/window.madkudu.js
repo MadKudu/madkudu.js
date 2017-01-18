@@ -5,7 +5,7 @@ var expect = chai.expect;
 
 describe('window.madkudu', function () {
 
-	before(function (done) {
+	it('should emit the ready callback', function (done) {
 		window.madkudu.ready(function () {
 			console.log('MadKudu is ready');
 			done();

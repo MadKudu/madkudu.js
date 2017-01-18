@@ -5,8 +5,13 @@ var expect = chai.expect;
 
 describe('analytics.ready', function () {
 
-	before(function (done) {
-		// Wait the loading of analytics.js
+	it('should emit the ready callback', function (done) {
+		window.analytics.ready(function () {
+			done();
+		});
+	});
+
+	it('should emit the ready callback', function (done) {
 		window.analytics.ready(function () {
 			done();
 		});

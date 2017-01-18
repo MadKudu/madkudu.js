@@ -12,10 +12,18 @@ module.exports = function (settings, options) {
 
 	const webpack_config = _.cloneDeep(WEBPACK_CONFIG);
 
+	const injections = {
+		__SETTINGS__: JSON.stringify(settings)
+	};
+
 	if (options.test) {
 		webpack_config.output = {
 			libraryTarget: 'var'
 		};
+		if (!process.env.SEGMENT_API_KEY) {
+			throw new Error('A SEGMENT_API_KEY is required');
+		}
+		injections.__SEGMENT_API_KEY__ = JSON.stringify(process.env.SEGMENT_API_KEY);
 	} else {
 		webpack_config.context = __dirname + '/..';
 		webpack_config.entry = SRC;
@@ -24,12 +32,7 @@ module.exports = function (settings, options) {
 	}
 
 	// inject the settings into the source
-	webpack_config.plugins.push(
-		new webpack.DefinePlugin({
-			__SETTINGS__: JSON.stringify(settings),
-			__SEGMENT_API_KEY__: JSON.stringify(process.env.SEGMENT_API_KEY)
-		})
-	);
+	webpack_config.plugins.push(new webpack.DefinePlugin(injections));
 
 	// only add these dependencies if campaigns are activated
 	if (settings.form && settings.form.campaigns && settings.form.campaigns.length > 0) {
