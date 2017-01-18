@@ -32,7 +32,7 @@ Compiler.prototype.compile = function () {
 		.then(stats => {
 			console.log(stats.toString({ chunks: false, colors: true }));
 			fs.writeFileSync(this.options.dist_path + '/webpack.json', JSON.stringify(stats.toJson({ reasons: true }), null, JSON_INDENT));
-			this.logger.log('info', 'compiled madkudu.js', { options: this.options });
+			this.logger.log('info', 'compiled madkudu.js', { options: { min: this.options.min } });
 		});
 };
 
