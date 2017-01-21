@@ -23,7 +23,11 @@ module.exports = function (settings, options) {
 		if (!process.env.SEGMENT_API_KEY) {
 			throw new Error('A SEGMENT_API_KEY is required');
 		}
+		if (!process.env.MADKUDU_API_KEY) {
+			throw new Error('A MADKUDU_API_KEY is required');
+		}
 		injections.__SEGMENT_API_KEY__ = JSON.stringify(process.env.SEGMENT_API_KEY);
+		injections.__MADKUDU_API_KEY__ = JSON.stringify(process.env.MADKUDU_API_KEY);
 	} else {
 		webpack_config.context = __dirname + '/..';
 		webpack_config.entry = SRC;
