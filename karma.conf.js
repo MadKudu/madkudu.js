@@ -41,7 +41,7 @@ var saucelabs_custom_launcher = {
 	},
 	sl_edge_latest: {
 		base: 'SauceLabs',
-		browserName: 'microsoftedge',
+		browserName: 'microsoftedge'
 	},
 	/*
 	 * Safari
@@ -51,7 +51,7 @@ var saucelabs_custom_launcher = {
 		browserName: 'safari',
 		platform: 'macOS 10.12',
 		version: '10.0'
-	},
+	}
 };
 
 module.exports = function (config) {
