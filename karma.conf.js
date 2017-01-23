@@ -139,8 +139,10 @@ module.exports = function (config) {
 		},
 
 		// How long does Karma wait for a browser to reconnect (in ms).
-		browserDisconnectTimeout: 20000,
-		browserNoActivityTimeout: 20000,
+		browserDisconnectTimeout: 100000,
+		browserNoActivityTimeout: 100000,
+		browserDisconnectTolerance: 1,
+
 
 		coverageReporter: {
 			dir: 'dist/coverage/' + test_type,
