@@ -6,6 +6,7 @@ var expect = chai.expect;
 describe('analytics.ready', function () {
 
 	it('should emit the ready callback', function (done) {
+		this.timeout(20000);
 		window.analytics.ready(function () {
 			done();
 		});
