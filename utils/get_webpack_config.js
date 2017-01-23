@@ -20,6 +20,12 @@ module.exports = function (settings, options) {
 		webpack_config.output = {
 			libraryTarget: 'var'
 		};
+		if (!process.env.SAUCE_USERNAME) {
+			throw new Error('A SAUCE_USERNAME is required');
+		}
+		if (!process.env.SAUCE_ACCESS_KEY) {
+			throw new Error('A SAUCE_ACCESS_KEY is required');
+		}
 		if (!process.env.SEGMENT_API_KEY) {
 			throw new Error('A SEGMENT_API_KEY is required');
 		}
