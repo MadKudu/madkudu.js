@@ -47,6 +47,13 @@ module.exports = function (config) {
 					{ pattern: 'test/support/require_main.js' },
 					{ pattern: 'test/compiled/window.madkudu.js', watched: true }
 				];
+			} else if (test_type === 'snippet') {
+				return [
+					{ pattern: 'test/support/setup.js', watched: true },
+					{ pattern: 'test/support/snippet.js', watched: true },
+					{ pattern: 'test/support/teardown.js', watched: true },
+					{ pattern: 'test/compiled/window.snippet.js', watched: true }
+				];
 			} else if (test_type === 'unit') {
 				return [
 					{ pattern: 'test/support/setup.js', watched: true },
