@@ -134,9 +134,13 @@ module.exports = function (config) {
 			mocha: {
 				grep: process.env.GREP,
 				reporter: 'html',
-				timeout: 10000
+				timeout: 20000
 			}
 		},
+
+		// How long does Karma wait for a browser to reconnect (in ms).
+		browserDisconnectTimeout: 20000,
+		browserNoActivityTimeout: 20000,
 
 		coverageReporter: {
 			dir: 'dist/coverage/' + test_type,
