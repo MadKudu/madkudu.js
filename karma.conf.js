@@ -79,6 +79,12 @@ module.exports = function (config) {
 					{ pattern: 'test/support/teardown.js', watched: true },
 					{ pattern: 'test/compiled/window.jquery.js', watched: true }
 				];
+			} else if (test_type === 'stripe') {
+				return [
+					{ pattern: 'test/support/stripe_checkout.html', watched: true },
+					{ pattern: 'dist/madkudu.min.js', watched: true },
+					{ pattern: 'test/compiled/window.stripe.js', watched: true }
+				];
 			} else if (test_type === 'segment') {
 				return [
 					{ pattern: 'test/support/segment.js', watched: true },

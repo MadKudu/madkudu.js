@@ -35,6 +35,7 @@
     "test-require": "NODE_ENV=test TESTS=require npm run karma",
     "test-segment": "NODE_ENV=test TESTS=segment npm run karma",
     "test-snippet": "NODE_ENV=test TESTS=snippet npm run karma",
+    "test-stripe": "NODE_ENV=test TESTS=stripe npm run karma",
     "karma": "./node_modules/karma/bin/karma start karma.conf.js",
     "coverage": "./node_modules/codeclimate-test-reporter/bin/codeclimate.js < $(find dist/coverage/unit/Chrome*/lcov.info)"
   },

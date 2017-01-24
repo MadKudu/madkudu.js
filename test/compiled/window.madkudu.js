@@ -25,6 +25,10 @@ describe('window.madkudu', function () {
 
 	});
 
+	it('should not expose jquery', function () {
+		expect(window['jQuery']).to.be.undefined;
+		expect(window['$']).to.be.undefined;
+	});
 });
 
 describe('settings', function () {
