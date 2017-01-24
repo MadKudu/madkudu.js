@@ -10,6 +10,50 @@ const test_type = process.env.TESTS || 'unit';
 
 console.log(test_type);
 
+// Configuration Browser Testing with Sauce Labs
+var saucelabs_custom_launcher = {
+	/**
+	 * Chrome Test
+	 */
+	sl_chrome_latest: {
+		base: 'SauceLabs',
+		browserName: 'chrome',
+		version: 'latest',
+		platform: 'macOS 10.12'
+	},
+	/**
+	 * Firefox
+	 */
+	sl_firefox_latest: {
+		base: 'SauceLabs',
+		browserName: 'firefox',
+		version: 'latest',
+		platform: 'macOS 10.12'
+	},
+	/*
+	 * Internet Explorer
+	 */
+	sl_internet_explorer: {
+		base: 'SauceLabs',
+		browserName: 'internet explorer',
+		version: '11.0',
+		platform: 'Windows 7'
+	},
+	sl_edge_latest: {
+		base: 'SauceLabs',
+		browserName: 'microsoftedge'
+	},
+	/*
+	 * Safari
+	 */
+	sl_safari: {
+		base: 'SauceLabs',
+		browserName: 'safari',
+		platform: 'macOS 10.12',
+		version: '10.0'
+	}
+};
+
 module.exports = function (config) {
 
 	config.set({
@@ -104,7 +148,7 @@ module.exports = function (config) {
 			if (process.env.BROWSERS) {
 				return process.env.BROWSERS.split(',');
 			} else if (CI === 'true') {
-				return ['Chrome', 'PhantomJS', 'Firefox'];
+				return ['PhantomJS'].concat(Object.keys(saucelabs_custom_launcher));
 			} else if (DEV === 'true') {
 				return ['Chrome'];
 			} else {
@@ -113,13 +157,7 @@ module.exports = function (config) {
 		})(),
 
 		// custom flag
-		// disable chrome security
-		customLaunchers: {
-			Chrome_without_security: {
-				base: 'Chrome',
-				flags: ['--disable-web-security']
-			}
-		},
+		customLaunchers: saucelabs_custom_launcher,
 
 		// Continuous Integration mode
 		// if true, Karma captures browsers, runs the tests and exits
@@ -134,9 +172,20 @@ module.exports = function (config) {
 			mocha: {
 				grep: process.env.GREP,
 				reporter: 'html',
-				timeout: 10000
+				timeout: 20000
 			}
 		},
+
+		// Browser testing with Sauce Labs
+		sauceLabs: {
+			testName: require('./package.json').name
+		},
+
+		// How long does Karma wait for a browser to reconnect (in ms).
+		browserDisconnectTimeout: 30000,
+		browserNoActivityTimeout: 30000,
+		browserDisconnectTolerance: 1,
+
 
 		coverageReporter: {
 			dir: 'dist/coverage/' + test_type,
