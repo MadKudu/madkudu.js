@@ -1,7 +1,11 @@
+<!-- Manual Test, the Stripe Checkout popup will be appear -->
+
+<script src="../../dist/madkudu.min.js"></script>
 <script src="https://checkout.stripe.com/checkout.js"></script>
+
+<button id="customButton">Purchase</button>
+
 <script>
-	var mk_stripe_was_opened;
-	var mk_stripe_was_closed;
 
 	var handler = StripeCheckout.configure({
 		key: 'pk_test_6pRNASCoBOKtIshFeQd4XMUh', // Stripe Test Key
@@ -13,11 +17,27 @@
 		},
 		opened: function () {
 			console.log('Stripe Opened');
-			mk_stripe_was_opened = true;
 		},
 		closed: function () {
 			console.log('Stripe Closed');
-			mk_stripe_was_closed = true;
 		}
 	});
+
+	document.getElementById('customButton').addEventListener('click', function(e) {
+	// Open Checkout with further options:
+	handler.open({
+		name: 'Stripe.com',
+		description: '2 widgets',
+		zipCode: true,
+		amount: 2000
+	});
+		e.preventDefault();
+	});
+
+	// Close Checkout on page navigation:
+	window.addEventListener('popstate', function() {
+	  handler.close();
+	});
+
+	console.log('madkudu', madkudu);
 </script>
