@@ -110,6 +110,10 @@ module.exports = function (config) {
 					{ pattern: 'test/unit/*.js', watched: true },
 					{ pattern: 'test/support/teardown.js', watched: true }
 				];
+			} else if (test_type === 'smart_form') {
+				return [
+					{ pattern: 'test/browser/mk_smart_form_simple.html', watched: true }
+				];
 			}
 		})(),
 
@@ -188,8 +192,8 @@ module.exports = function (config) {
 		},
 
 		// How long does Karma wait for a browser to reconnect (in ms).
-		browserDisconnectTimeout: 30000,
-		browserNoActivityTimeout: 30000,
+		browserDisconnectTimeout: 50000,
+		browserNoActivityTimeout: 50000,
 		browserDisconnectTolerance: 1,
 
 
