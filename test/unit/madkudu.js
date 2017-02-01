@@ -535,7 +535,7 @@ describe('MadKudu', function () {
 				var xhr = sinon.useFakeXMLHttpRequest();
 				xhr.onCreate = ajax;
 
-				madkudu.request('/predict', { email: 'a' });
+				madkudu.request('/persons', { email: 'a' });
 
 				sinon.assert.calledOnce(ajax);
 			});
@@ -552,14 +552,14 @@ describe('MadKudu', function () {
 
 				var response = { text: 'mock' };
 
-				madkudu._send_json = function (url, data, headers, fn) {
+				madkudu._send_get = function (url, data, headers, fn) {
 					var req = { response: JSON.stringify(response) };
 					fn(null, req);
 				};
 
 				var callback = sinon.spy();
 
-				madkudu.request('/predict', { email: 'a' }, callback);
+				madkudu.request('/persons', { email: 'a' }, callback);
 
 				tick(function () {
 					sinon.assert.calledWith(callback, null, response);
@@ -572,14 +572,14 @@ describe('MadKudu', function () {
 
 				var response = { text: 'mock' };
 
-				madkudu._send_json = function (url, data, headers, fn) {
+				madkudu._send_get = function (url, data, headers, fn) {
 					var req = { response: response };
 					fn(null, req);
 				};
 
 				var callback = sinon.spy();
 
-				madkudu.request('/predict', { email: 'a' }, callback);
+				madkudu.request('/persons', { email: 'a' }, callback);
 
 				tick(function () {
 					var args = callback.args[0];
@@ -591,13 +591,13 @@ describe('MadKudu', function () {
 
 			it('should callback with error if error in the request', function (done) {
 
-				madkudu._send_json = function (url, data, headers, fn) {
+				madkudu._send_get = function (url, data, headers, fn) {
 					fn(new Error('bad request'));
 				};
 
 				var callback = sinon.spy();
 
-				madkudu.request('/predict', { email: 'a' }, callback);
+				madkudu.request('/persons', { email: 'a' }, callback);
 
 				tick(function () {
 					var args = callback.args[0];
@@ -611,7 +611,7 @@ describe('MadKudu', function () {
 
 	});
 
-	describe('#predict', function () {
+	describe('#persons', function () {
 
 		beforeEach(function () {
 			sinon.stub(madkudu, 'request');
@@ -619,15 +619,15 @@ describe('MadKudu', function () {
 
 		it('should call request with route and data', function () {
 			var data = {};
-			madkudu.predict(data);
-			sinon.assert.calledWith(madkudu.request, '/predict', data, undefined);
+			madkudu.persons(data);
+			sinon.assert.calledWith(madkudu.request, '/persons', data, undefined);
 		});
 
 		it('should call request with callback', function () {
 			var data = {};
 			var fn = sinon.spy();
-			madkudu.predict(data, fn);
-			sinon.assert.calledWith(madkudu.request, '/predict', data, fn);
+			madkudu.persons(data, fn);
+			sinon.assert.calledWith(madkudu.request, '/persons', data, fn);
 		});
 	});
 

@@ -38,20 +38,21 @@ var saucelabs_custom_launcher = {
 		browserName: 'internet explorer',
 		version: '11.0',
 		platform: 'Windows 7'
-	},
-	sl_edge_latest: {
-		base: 'SauceLabs',
-		browserName: 'microsoftedge'
-	},
+	}
+	// ,
+	// sl_edge_latest: {
+	// 	base: 'SauceLabs',
+	// 	browserName: 'microsoftedge'
+	// },
 	/*
 	 * Safari
 	 */
-	sl_safari: {
-		base: 'SauceLabs',
-		browserName: 'safari',
-		platform: 'macOS 10.12',
-		version: '10.0'
-	}
+	// sl_safari: {
+	// 	base: 'SauceLabs',
+	// 	browserName: 'safari',
+	// 	platform: 'macOS 10.12',
+	// 	version: '10.0'
+	// }
 };
 
 module.exports = function (config) {
@@ -109,6 +110,10 @@ module.exports = function (config) {
 					{ pattern: 'test/support/setup.js', watched: true },
 					{ pattern: 'test/unit/*.js', watched: true },
 					{ pattern: 'test/support/teardown.js', watched: true }
+				];
+			} else if (test_type === 'smart_form') {
+				return [
+					{ pattern: 'test/browser/mk_smart_form_simple.html', watched: true }
 				];
 			}
 		})(),
@@ -188,8 +193,8 @@ module.exports = function (config) {
 		},
 
 		// How long does Karma wait for a browser to reconnect (in ms).
-		browserDisconnectTimeout: 30000,
-		browserNoActivityTimeout: 30000,
+		browserDisconnectTimeout: 50000,
+		browserNoActivityTimeout: 50000,
 		browserDisconnectTolerance: 1,
 
 

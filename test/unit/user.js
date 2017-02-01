@@ -520,24 +520,24 @@ describe('user', function () {
 
 	});
 
-	describe('#predict', function () {
+	describe('#persons', function () {
 
 		before(function () {
-			sinon.spy(window.madkudu, 'predict');
+			sinon.spy(window.madkudu, 'persons');
 		});
 
-		it('should pass the user traits to madkudu.predict', function () {
+		it('should pass the user traits to madkudu.persons', function () {
 			const traits = { email: 'test@madkudu.com' };
 			user.traits = sinon.stub().returns(traits);
 
-			user.predict();
+			user.persons();
 
 			sinon.assert.called(user.traits);
-			sinon.assert.calledWith(window.madkudu.predict, { email: traits.email }, undefined);
+			sinon.assert.calledWith(window.madkudu.persons, { email: traits.email }, undefined);
 		});
 
 		after(function () {
-			window.madkudu.predict.restore();
+			window.madkudu.persons.restore();
 		});
 
 	});
@@ -545,13 +545,13 @@ describe('user', function () {
 	describe('#qualify', function () {
 
 		before(function () {
-			sinon.stub(window.madkudu, 'predict');
+			sinon.stub(window.madkudu, 'persons');
 		});
 
-		it('should call predict', function () {
-			user.predict = sinon.spy();
+		it('should call persons', function () {
+			user.persons = sinon.spy();
 			user.qualify();
-			sinon.assert.called(user.predict);
+			sinon.assert.called(user.persons);
 		});
 
 		it('should call identify with the results', function () {
@@ -566,7 +566,7 @@ describe('user', function () {
 			};
 
 			user.identify = sinon.spy();
-			window.madkudu.predict.callsArgWith(1, null, results);
+			window.madkudu.persons.callsArgWith(1, null, results);
 
 			user.qualify();
 
@@ -574,10 +574,10 @@ describe('user', function () {
 
 		});
 
-		it('should work if predict does not return results', function () {
+		it('should work if persons does not return results', function () {
 
 			user.identify = sinon.spy();
-			window.madkudu.predict.callsArgWith(1, null, null);
+			window.madkudu.persons.callsArgWith(1, null, null);
 
 			user.qualify();
 
@@ -590,7 +590,7 @@ describe('user', function () {
 			const results = {};
 
 			const callback = sinon.spy();
-			window.madkudu.predict.callsArgWith(1, null, results);
+			window.madkudu.persons.callsArgWith(1, null, results);
 
 			user.qualify(callback);
 
@@ -603,7 +603,7 @@ describe('user', function () {
 			const err = new Error('test');
 
 			const callback = sinon.spy();
-			window.madkudu.predict.callsArgWith(1, err);
+			window.madkudu.persons.callsArgWith(1, err);
 
 			user.qualify(callback);
 
@@ -612,7 +612,7 @@ describe('user', function () {
 		});
 
 		after(function () {
-			window.madkudu.predict.restore();
+			window.madkudu.persons.restore();
 		});
 
 	});
