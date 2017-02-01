@@ -53,8 +53,7 @@ module.exports = {
 							js: 'console.log(\'Want to improve your signup form? http://try.madkudu.com/smart-form\'); $(\'#mk_smart_form\').hide();'
 						},
 						on_qualified: {
-							hook: 'https://hooks.zapier.com/hooks/catch/874624/t7ntqj/',
-							js: 'console.log(madkudu.user().traits()); $(\'#mk_smart_form\').show();'
+							js: 'console.log(madkudu.user().traits()); $(\'#mk_smart_form\').show();form.track_cta($(\'.mk_smart_form_cta\'), \'click\', \'request_help\');'
 						},
 						on_request: {
 						}
