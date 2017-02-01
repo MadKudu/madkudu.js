@@ -38,7 +38,8 @@ var saucelabs_custom_launcher = {
 		browserName: 'internet explorer',
 		version: '11.0',
 		platform: 'Windows 7'
-	},
+	}
+	// ,
 	// sl_edge_latest: {
 	// 	base: 'SauceLabs',
 	// 	browserName: 'microsoftedge'
