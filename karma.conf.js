@@ -39,19 +39,19 @@ var saucelabs_custom_launcher = {
 		version: '11.0',
 		platform: 'Windows 7'
 	},
-	sl_edge_latest: {
-		base: 'SauceLabs',
-		browserName: 'microsoftedge'
-	},
+	// sl_edge_latest: {
+	// 	base: 'SauceLabs',
+	// 	browserName: 'microsoftedge'
+	// },
 	/*
 	 * Safari
 	 */
-	sl_safari: {
-		base: 'SauceLabs',
-		browserName: 'safari',
-		platform: 'macOS 10.12',
-		version: '10.0'
-	}
+	// sl_safari: {
+	// 	base: 'SauceLabs',
+	// 	browserName: 'safari',
+	// 	platform: 'macOS 10.12',
+	// 	version: '10.0'
+	// }
 };
 
 module.exports = function (config) {
