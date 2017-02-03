@@ -11,15 +11,15 @@ const babel_settings = {
 
 module.exports = {
 	resolveLoader: {
-		modulesDirectories: ['utils', 'node_modules']
+		modules: ['utils', 'node_modules']
 	},
 	module: {
-		loaders: [
+		rules: [
 			{
 				test: /\.js$/,
 				exclude: /node_modules(?!(\/@madkudu\/madkudu\.js))/, // exclude all node_modules, except @madkudu/madkudu.js (the exclusion is necessary for this to work inside another project)
 				loader: 'babel-loader',
-				query: babel_settings
+				options: babel_settings
 			},
 			{
 				test: require.resolve('json3'),
