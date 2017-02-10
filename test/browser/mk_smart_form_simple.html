@@ -1,14 +1,14 @@
 <script type="text/javascript"> !
-		function(e,t){
-			e.madkudu = null;
-			var r=e.madkudu=e.madkudu||[];if(!r.initialize)if(r.invoked)e.console&&console.error&&console.error("MadKudu snippet included twice."); else{r.invoked=!0,r.methods=["identify","reset","group","ready","page","track","once","on","smart_form"],r.factory=function(e){return function(){var t=Array.prototype.slice.call(arguments); return t.unshift(e),r.push(t),r}};for(var o=0;o<r.methods.length;o++){var n=r.methods[o]; r[n]=r.factory(n)}
-			r.load=function(r){
-				var o = '../../dist/madkudu.min.js';
-				if("function"==typeof e.define&&e.define.amd)e.require([o]);else{var n=t.createElement("script"); n.type="text/javascript",n.async=!0,n.src=o;var a=t.getElementsByTagName("script")[0]; a.parentNode.insertBefore(n,a)}}
-			}}(window,document);
-		madkudu.SNIPPET_VERSION = '0.4.0';
-		madkudu.load('TEST');
-		madkudu.page();
+    function(e,t){
+      e.madkudu = null;
+      var r=e.madkudu=e.madkudu||[];if(!r.initialize)if(r.invoked)e.console&&console.error&&console.error("MadKudu snippet included twice."); else{r.invoked=!0,r.methods=["identify","reset","group","ready","page","track","once","on","smart_form"],r.factory=function(e){return function(){var t=Array.prototype.slice.call(arguments); return t.unshift(e),r.push(t),r}};for(var o=0;o<r.methods.length;o++){var n=r.methods[o]; r[n]=r.factory(n)}
+      r.load=function(r){
+        var o = '../../dist/madkudu.min.js';
+        if("function"==typeof e.define&&e.define.amd)e.require([o]);else{var n=t.createElement("script"); n.type="text/javascript",n.async=!0,n.src=o;var a=t.getElementsByTagName("script")[0]; a.parentNode.insertBefore(n,a)}}
+      }}(window,document);
+    madkudu.SNIPPET_VERSION = '0.4.0';
+    madkudu.load('TEST');
+    madkudu.page();
 </script>
 
 <style>
@@ -16,25 +16,25 @@
 </style>
 
 <form class="" action="index.html" method="post">
-	<fieldset>
-	<label>Email</label>
-	<input name="user_email" type="email" autocomplete="on" placeholder="elon@tesla.com"></input>
-	<label>Name</label>
-	<input name="company_name" type="test" autocomplete="on" placeholder="Elon"></input>
-	<label>Password</label>
-	<input name="password" type="password" autocomplete="on" placeholder="******"></input>
+  <fieldset>
+  <label>Email</label>
+  <input name="user_email" type="email" autocomplete="on" placeholder="elon@tesla.com"></input>
+  <label>Name</label>
+  <input name="company_name" type="test" autocomplete="on" placeholder="Elon"></input>
+  <label>Password</label>
+  <input name="password" type="password" autocomplete="on" placeholder="******"></input>
 
-	<!-- BEGIN MadKudu Smart Form -->
-	<div id="mk_smart_form">
-		<p>Would you like help getting started?</p>
-		<input id="mk_smart_form_cta_yes" class="mk_smart_form_cta" name="mk_smart_form_cta" type="radio" value="yes"></input>
-		<label for="mk_smart_form_cta_yes">Yes</label>
-		<input id="mk_smart_form_cta_no" class="mk_smart_form_cta" name="mk_smart_form_cta" type="radio" value="no"></input>
-		<label for="mk_smart_form_cta_no">No</label>
-	</div>
-	<!-- END MadKudu Smart Form -->
+  <!-- BEGIN MadKudu Smart Form -->
+  <div id="mk_smart_form">
+    <p>Would you like help getting started?</p>
+    <input id="mk_smart_form_cta_yes" class="mk_smart_form_cta" name="mk_smart_form_cta" type="radio" value="yes"></input>
+    <label for="mk_smart_form_cta_yes">Yes</label>
+    <input id="mk_smart_form_cta_no" class="mk_smart_form_cta" name="mk_smart_form_cta" type="radio" value="no"></input>
+    <label for="mk_smart_form_cta_no">No</label>
+  </div>
+  <!-- END MadKudu Smart Form -->
 
-	</fieldset>
+  </fieldset>
 
-	<button type="submit">Signup</button>
+  <button type="submit">Signup</button>
 </form>
