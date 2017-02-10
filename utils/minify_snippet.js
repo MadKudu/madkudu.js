@@ -8,17 +8,17 @@
 // const dist_html = './dist/snippet.html';
 //
 // const copy = function () {
-// 	fs.writeFileSync(dist, fs.readFileSync(src, 'utf8'));
+//  fs.writeFileSync(dist, fs.readFileSync(src, 'utf8'));
 // };
 //
 // const minify = function () {
-// 	const minified = uglify.minify(src);
-// 	// console.log(minified);
-// 	fs.writeFileSync(dist_min, minified.code);
+//  const minified = uglify.minify(src);
+//  // console.log(minified);
+//  fs.writeFileSync(dist_min, minified.code);
 // };
 //
 // function html_escape (str) {
-// 	return str
+//  return str
 //         .replace(/&/g, '&amp;')
 //         .replace(/"/g, '&quot;')
 //         .replace(/'/g, '&#39;')
@@ -27,11 +27,11 @@
 // }
 //
 // const html_encode = function () {
-// 	var string = '<script type="text/javascript">\n';
-// 	string += fs.readFileSync(dist_min, 'utf8');
-// 	string += '</script>';
-// 	string = html_escape(string);
-// 	fs.writeFileSync(dist_html, string);
+//  var string = '<script type="text/javascript">\n';
+//  string += fs.readFileSync(dist_min, 'utf8');
+//  string += '</script>';
+//  string = html_escape(string);
+//  fs.writeFileSync(dist_html, string);
 // };
 //
 // // copy();
