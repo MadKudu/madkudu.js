@@ -22,6 +22,22 @@ module.exports = {
         options: babel_settings
       },
       {
+        test: /\.css$/,
+        use: 'css-loader'
+      },
+      {
+        test: /\.less$/,
+        use: [
+          'style-loader',
+          { loader: 'css-loader', options: { importLoaders: 1 } },
+          'less-loader'
+        ]
+      },
+      {
+        test: /\.html$/,
+        use: 'html-loader'
+      },
+      {
         test: require.resolve('json3'),
         loader: 'imports-loader?define=>false'
       } // without this, loading json3 modifies window.JSON (see https://github.com/webpack/docs/wiki/shimming-modules#disable-some-module-styles)

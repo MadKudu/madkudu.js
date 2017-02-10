@@ -27,42 +27,6 @@ module.exports = {
         url_conditions: [
           {
             match_type: 'simple',
-            value: 'https://app.madkudu.com/signup'
-          },
-          {
-            match_type: 'simple',
-            value: 'try.madkudu.com'
-          },
-          {
-            match_type: 'simple',
-            value: '/signup'
-          }
-        ]
-      },
-      {
-        _id: 'r1sPo7xPx',
-        active: true,
-        name: 'Browser Test Smart Form',
-        custom_css: '',
-        custom_js: '',
-        __v: 1,
-        description: '',
-        variations: [
-          {
-            on_load: {
-              js: 'console.log(\'Want to improve your signup form? http://try.madkudu.com/smart-form\'); $(\'#mk_smart_form\').hide();'
-            },
-            on_qualified: {
-              js: 'console.log(madkudu.user().traits()); $(\'#mk_smart_form\').show();form.track_cta($(\'.mk_smart_form_cta\'), \'click\', \'request_help\');'
-            },
-            on_request: {
-            }
-          }
-        ],
-        trigger: { js: 'form.track_input($(\'input[type="email"]\'));' },
-        url_conditions: [
-          {
-            match_type: 'simple',
             value: '.+'
           }
         ]
