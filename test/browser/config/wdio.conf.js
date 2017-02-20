@@ -70,7 +70,6 @@ exports.config = {
     // Set a base URL in order to shorten url command calls. If your url parameter starts
     // with "/", then the base url gets prepended.
   baseUrl: 'http://localhost:3004',
-  // baseUrl: './samples/mk_smart_from_simple.html',
     //
     // Default timeout for all waitFor* commands.
   waitforTimeout: 30000,
