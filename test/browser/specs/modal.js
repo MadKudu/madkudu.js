@@ -19,7 +19,7 @@ describe('functional / smart form modal', function () {
 
 	it('should open the modal', function () {
 		browser
-		 	.url('/mk_smart_form_simple.html?email=elon@tesla.com')
+		 	.url('/modal.html?email=elon@tesla.com')
 		browser
 		 	.execute(function(modal_options) {
 				window.madkudu.forms[0].show_modal(modal_options)
