@@ -489,6 +489,22 @@ describe('user', function () {
     })
   })
 
+  describe('#customer_fit', function () {
+    it('should return the customer_fit trait', function () {
+      const customer_fit = { segment: 'good' }
+      user.identify(user.id(), { customer_fit: customer_fit })
+      expect(user.customer_fit()).to.deep.equal(customer_fit)
+    })
+  })
+
+  describe('#customer_fit_segment', function () {
+    it('should return the customer_fit segment', function () {
+      const customer_fit = { segment: 'good' }
+      user.identify(user.id(), { customer_fit: customer_fit })
+      expect(user.customer_fit_segment()).to.equal(customer_fit.segment)
+    })
+  })
+
   describe('#_is_qualified', function () {
     it('should return true for good / very good', function () {
       expect(user._is_qualified('good')).to.equal(true)
@@ -504,12 +520,12 @@ describe('user', function () {
 
   describe('#is_qualified', function () {
     it('should return true for good / very good', function () {
-      user.identify(user.id(), { customer_fit_segment: 'good' })
+      user.identify(user.id(), { customer_fit: { segment: 'good' } })
       expect(user.is_qualified()).to.equal(true)
     })
 
     it('should return false otherwise', function () {
-      user.identify(user.id(), { customer_fit_segment: 'low' })
+      user.identify(user.id(), { customer_fit: { segment: 'low' } })
       expect(user.is_qualified()).to.equal(false)
     })
   })
@@ -547,12 +563,13 @@ describe('user', function () {
 
     it('should call identify with the results', function () {
       const results = {
-        domain: 'madkudu.com',
-        customer_fit: {
-          segment: 'very good'
+        properties: {
+          domain: 'madkudu.com',
+          customer_fit: {
+            segment: 'very good'
+          }
         },
-        company: {},
-        person: {}
+        company: {}
       }
 
       user.identify = sinon.spy()
