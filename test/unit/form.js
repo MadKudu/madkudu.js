@@ -154,7 +154,6 @@ describe('form', function () {
       form.load()
       sinon.assert.called(form.on_load)
       sinon.assert.calledWith(form.track, 'loaded')
-      sinon.assert.called(form.parse_query_string)
       sinon.assert.called(form.trigger)
     })
 
@@ -167,7 +166,6 @@ describe('form', function () {
       form.load()
       sinon.assert.calledOnce(form.on_load)
       sinon.assert.calledOnce(form.track)
-      sinon.assert.calledOnce(form.parse_query_string)
       sinon.assert.calledOnce(form.trigger)
     })
   })
