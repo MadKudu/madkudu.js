@@ -1,4 +1,3 @@
-
 const chai = require('chai')
 const expect = chai.expect
 const sinon = require('sinon')
@@ -239,11 +238,11 @@ describe('form', function () {
     })
 
     it('should return true for a valid email', function () {
-      expect(form.is_email('test@madkudu.com')).to.be.true
+      expect(form.is_email('test@madkudu.com')).to.equal(true)
     })
 
     it('should return false for an invalid email', function () {
-      expect(form.is_email('test.madkudu.com')).to.be.false
+      expect(form.is_email('test.madkudu.com')).to.equal(false)
     })
   })
 })

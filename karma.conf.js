@@ -1,5 +1,3 @@
-'use strict'
-
 const CI = process.env.CI
 const DEV = process.env.DEV
 

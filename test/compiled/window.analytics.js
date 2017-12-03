@@ -1,7 +1,5 @@
-'use strict'
-
-var chai = require('chai')
-var expect = chai.expect
+const chai = require('chai')
+const expect = chai.expect
 
 describe('analytics.ready', function () {
   it('should emit the ready callback', function (done) {

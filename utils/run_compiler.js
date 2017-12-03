@@ -1,4 +1,3 @@
-
 const watch = process.env.WATCH === 'true'
 
 const Compiler = require('./compiler')

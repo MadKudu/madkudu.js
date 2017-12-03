@@ -1,5 +1,3 @@
-'use strict'
-
 const webpack = require('webpack')
 const Q = require('q')
 const fs = require('fs')
@@ -7,13 +5,12 @@ const DEFAULT_SETTINGS = require('./default_settings')
 const get_webpack_config = require('./get_webpack_config')
 
 const FILENAME = 'madkudu.js'
-const DIST_PATH = './dist'
+const DIST_PATH = '../dist'
 const JSON_INDENT = 4
 
-const Compiler = function (settings, options) {
-  this.settings = settings || DEFAULT_SETTINGS
-  this.options = options || {}
-
+const Compiler = function (settings = DEFAULT_SETTINGS, options = {}) {
+  this.settings = settings
+  this.options = options
   this.options.dist_path = this.options.dist_path || DIST_PATH
   this.options.output_path = this.options.dist_path + '/' + FILENAME
   this.options.filename = this.options.filename || FILENAME
@@ -31,13 +28,12 @@ Compiler.prototype.compile = function () {
   return Q.ninvoke(compiler, 'run')
     .then(stats => {
       console.log(stats.toString({ chunks: false, colors: true }))
-      fs.writeFileSync(this.options.dist_path + '/webpack.json', JSON.stringify(stats.toJson({ reasons: true }), null, JSON_INDENT))
+      fs.writeFileSync(`${this.options.dist_path}/webpack.json`, JSON.stringify(stats.toJson({ reasons: true }), null, JSON_INDENT))
       this.logger.log('info', 'compiled madkudu.js', { options: { min: !!this.options.min } })
     })
 }
 
-Compiler.prototype.run = function (options) {
-  options = options || {}
+Compiler.prototype.run = function (options = {}) {
   let promise = this.compile()
   if (options.min) { // if min is specified, also compiled to the minified format
     promise = promise.then(() => {

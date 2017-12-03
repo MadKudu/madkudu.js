@@ -7,10 +7,7 @@ const debug = require('debug')('compiler')
 
 const SRC = './lib/index.js'
 
-module.exports = function (settings, options) {
-  settings = settings || {}
-  options = options || {}
-
+module.exports = function (settings = {}, options = {}) {
   const webpack_config = _.cloneDeep(WEBPACK_CONFIG)
 
   const injections = {
@@ -36,7 +33,7 @@ module.exports = function (settings, options) {
     webpack_config.context = path.join(__dirname, '/..')
     webpack_config.entry = SRC
     webpack_config.output.filename = options.min ? options.filename.replace('.js', '.min.js') : options.filename
-    webpack_config.output.path = options.dist_path
+    webpack_config.output.path = path.resolve(__dirname, options.dist_path)
   }
 
   // inject the settings into the source
