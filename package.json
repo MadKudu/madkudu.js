@@ -30,7 +30,7 @@
     "test": "npm run test-unit && npm run test-functional && npm run test-browser",
     "test-unit": "NODE_ENV=test TESTS=unit npm run karma",
     "test-compiled": "NODE_ENV=test TESTS=compiled npm run karma",
-    "test-functional": "npm run compile && npm run test-compiled && npm run test-require && npm run test-snippet && npm run test-segment",
+    "test-functional": "npm run compile && npm run test-compiled && npm run test-snippet && npm run test-segment",
     "test-jquery": "NODE_ENV=test TESTS=jquery npm run karma",
     "test-require": "NODE_ENV=test TESTS=require npm run karma",
     "test-segment": "NODE_ENV=test TESTS=segment npm run karma",
