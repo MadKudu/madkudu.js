@@ -11,5 +11,8 @@ if (watch) {
   compiler.watch()
 } else {
   compiler.run({ min: true })
-    .then(() => process.exit(0))
+    .catch(err => {
+      console.error(err)
+      process.exit(1)
+    }).then(() => process.exit(0))
 }

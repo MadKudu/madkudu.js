@@ -1,5 +1,3 @@
-'use strict'
-
 require('object.observe')
 
 // record the changes to the window object
