@@ -6,7 +6,7 @@ const DEFAULT_SETTINGS = require('./default_settings')
 const get_webpack_config = require('./get_webpack_config')
 
 const FILENAME = 'madkudu.js'
-const DIST_PATH = '../dist'
+const DIST_PATH = path.resolve(__dirname, '../dist')
 const JSON_INDENT = 4
 
 class Compiler {
@@ -29,8 +29,8 @@ class Compiler {
     return Q.ninvoke(compiler, 'run')
       .then(stats => {
         console.log(stats.toString({ chunks: false, colors: true }))
-        const summary_path = `${this.options.dist_path}/webpack.json`
-        fs.writeFileSync(`${path.resolve(__dirname, summary_path)}`, JSON.stringify(stats.toJson({ reasons: true }), null, JSON_INDENT))
+        const summary_path = path.resolve(DIST_PATH, './webpack.json')
+        fs.writeFileSync(`${summary_path}`, JSON.stringify(stats.toJson({ reasons: true }), null, JSON_INDENT))
         this.logger.log('info', 'compiled madkudu.js', { options: { min: !!this.options.min } })
       })
   }
