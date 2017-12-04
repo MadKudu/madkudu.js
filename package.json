@@ -36,7 +36,6 @@
     "test-segment": "NODE_ENV=test TESTS=segment npm run karma",
     "test-snippet": "NODE_ENV=test TESTS=snippet npm run karma",
     "test-stripe": "NODE_ENV=test TESTS=stripe npm run karma",
-    "test-smart_form": "NODE_ENV=test TESTS=smart_form npm run karma",
     "test-browser": "NODE_ENV=test TEST=browser node ./test/browser/index.js",
     "karma": "./node_modules/karma/bin/karma start karma.conf.js",
     "coverage": "./node_modules/codeclimate-test-reporter/bin/codeclimate.js < $(find dist/coverage/unit/Chrome*/lcov.info)"

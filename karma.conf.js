@@ -105,10 +105,6 @@ module.exports = function (config) {
           { pattern: 'test/unit/*.js', watched: true },
           { pattern: 'test/support/teardown.js', watched: true }
         ]
-      } else if (testType === 'smart_form') {
-        return [
-          { pattern: 'test/browser/mk_smart_form_simple.html', watched: true }
-        ]
       }
     })(),
 
@@ -157,7 +153,7 @@ module.exports = function (config) {
       } else if (process.env.DEV === 'true') {
         return ['Chrome']
       } else {
-        return ['Chrome', 'Firefox', 'Safari']
+        return ['Chrome', 'Firefox'] // 'Safari'
       }
     })(),
 
@@ -166,7 +162,7 @@ module.exports = function (config) {
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
-    singleRun: !(process.env.DEV === 'true'),
+    singleRun: process.env.DEV !== 'true',
 
     // Concurrency level
     // how many browser should be started simultaneous
