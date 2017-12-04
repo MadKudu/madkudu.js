@@ -29,7 +29,7 @@ class Compiler {
     return Q.ninvoke(compiler, 'run')
       .then(stats => {
         console.log(stats.toString({ chunks: false, colors: true }))
-        const summary_path = path.resolve(DIST_PATH, './webpack.json')
+        const summary_path = path.resolve(this.options.dist_path, './webpack.json')
         fs.writeFileSync(`${summary_path}`, JSON.stringify(stats.toJson({ reasons: true }), null, JSON_INDENT))
         this.logger.log('info', 'compiled madkudu.js', { options: { min: !!this.options.min } })
       })
