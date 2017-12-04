@@ -9,7 +9,7 @@ const testType = process.env.TESTS || 'unit'
 console.log(testType)
 
 // Configuration Browser Testing with Sauce Labs
-var sauceLabsLauncher = {
+const sauceLabsLauncher = {
   /**
    * Chrome Test
    */
