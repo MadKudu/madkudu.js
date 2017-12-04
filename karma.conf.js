@@ -1,6 +1,3 @@
-const CI = process.env.CI
-const DEV = process.env.DEV
-
 const DEFAULT_SETTINGS = require('./utils/default_settings')
 const getWebpackConfig = require('./utils/get_webpack_config')
 
@@ -145,7 +142,7 @@ module.exports = function (config) {
     logLevel: config.DEBUG,
 
     // enable / disable watching file and executing tests whenever any file changes
-    autoWatch: DEV === 'true',
+    autoWatch: process.env.DEV === 'true',
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
@@ -155,9 +152,9 @@ module.exports = function (config) {
     browsers: (function () {
       if (process.env.BROWSERS) {
         return process.env.BROWSERS.split(',')
-      } else if (CI === 'true') {
+      } else if (process.env.PHANTOM === 'true') {
         return ['PhantomJS'].concat(Object.keys(sauceLabsLauncher))
-      } else if (DEV === 'true') {
+      } else if (process.env.DEV === 'true') {
         return ['Chrome']
       } else {
         return ['Chrome', 'Firefox', 'Safari']
@@ -169,7 +166,7 @@ module.exports = function (config) {
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
-    singleRun: !(DEV === 'true'),
+    singleRun: !(process.env.DEV === 'true'),
 
     // Concurrency level
     // how many browser should be started simultaneous
