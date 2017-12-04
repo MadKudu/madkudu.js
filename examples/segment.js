@@ -1,4 +1,5 @@
-// console.log('mk js campaign v1.0.24');
+/* eslint-disable no-undef */
+
 // load ChiliPiper javascript
 form.load_external_script('https://js.chilipiper.com/marketing.js')
 
@@ -112,3 +113,5 @@ var display_calendar_if_qualified = function () {
 
 // execute this code when the form is submitted and the page changed
 once_url_change(display_calendar_if_qualified)
+
+/* eslint-enable no-undef */

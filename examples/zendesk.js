@@ -1,3 +1,5 @@
+/* eslint-disable no-undef */
+
 console.log(madkudu.user().traits())
 
 var user = madkudu.user()
@@ -41,3 +43,5 @@ if (user.is_qualified()) {
   dynamic_text = 'Unfortunately, looks like you\'re not qualified. Please try with another address'
 }
 $('#zendesk_onboarding_text').text(dynamic_text)
+
+/* eslint-enable no-undef */
