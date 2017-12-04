@@ -1,8 +1,3 @@
-'use strict'
-
-const CI = process.env.CI
-const DEV = process.env.DEV
-
 const DEFAULT_SETTINGS = require('./utils/default_settings')
 const getWebpackConfig = require('./utils/get_webpack_config')
 
@@ -11,7 +6,7 @@ const testType = process.env.TESTS || 'unit'
 console.log(testType)
 
 // Configuration Browser Testing with Sauce Labs
-var sauceLabsLauncher = {
+const sauceLabsLauncher = {
   /**
    * Chrome Test
    */
@@ -110,10 +105,6 @@ module.exports = function (config) {
           { pattern: 'test/unit/*.js', watched: true },
           { pattern: 'test/support/teardown.js', watched: true }
         ]
-      } else if (testType === 'smart_form') {
-        return [
-          { pattern: 'test/browser/mk_smart_form_simple.html', watched: true }
-        ]
       }
     })(),
 
@@ -147,7 +138,7 @@ module.exports = function (config) {
     logLevel: config.DEBUG,
 
     // enable / disable watching file and executing tests whenever any file changes
-    autoWatch: DEV === 'true',
+    autoWatch: process.env.DEV === 'true',
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
@@ -157,12 +148,12 @@ module.exports = function (config) {
     browsers: (function () {
       if (process.env.BROWSERS) {
         return process.env.BROWSERS.split(',')
-      } else if (CI === 'true') {
+      } else if (process.env.PHANTOM === 'true') {
         return ['PhantomJS'].concat(Object.keys(sauceLabsLauncher))
-      } else if (DEV === 'true') {
+      } else if (process.env.DEV === 'true') {
         return ['Chrome']
       } else {
-        return ['Chrome', 'Firefox', 'Safari']
+        return ['Chrome', 'Firefox'] // 'Safari'
       }
     })(),
 
@@ -171,7 +162,7 @@ module.exports = function (config) {
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
-    singleRun: !(DEV === 'true'),
+    singleRun: process.env.DEV !== 'true',
 
     // Concurrency level
     // how many browser should be started simultaneous

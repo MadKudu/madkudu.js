@@ -1,7 +1,5 @@
-'use strict'
-
 const babel_settings = {
-  'presets': ['es2015'],
+  'presets': ['env'],
   'env': {
     'test': {
       'plugins': [ 'istanbul' ]

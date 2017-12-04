@@ -1,5 +1,5 @@
-before(function (done) {
-  window.require(['./base/dist/madkudu.min.js'], function (madkudu) {
+before(done => {
+  window.require(['./base/madkudu.min.js'], madkudu => {
     window.madkudu = madkudu
     done()
   })

@@ -1,7 +1,5 @@
-'use strict'
-
-var express = require('express')
-var app = express()
+const express = require('express')
+const app = express()
 const PORT = 3004
 
 app.use(express.static('dist'))

@@ -1,5 +1,3 @@
-'use strict'
-
 // The server in utils need to be laucnhed
 const express = require('express')
 const app = express()

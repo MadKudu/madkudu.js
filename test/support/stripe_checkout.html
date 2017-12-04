@@ -1,15 +1,13 @@
 <script src="https://checkout.stripe.com/checkout.js"></script>
 <script>
-  var mk_stripe_was_opened;
-  var mk_stripe_was_closed;
+  var mk_stripe_was_opened = false;
+  var mk_stripe_was_closed = false;
+  console.log('handler')
   var handler = StripeCheckout.configure({
     key: 'pk_test_6pRNASCoBOKtIshFeQd4XMUh', // Stripe Test Key
     image: 'https://stripe.com/img/documentation/checkout/marketplace.png',
     locale: 'auto',
-    token: function(token) {
-    // You can access the token ID with `token.id`.
-    // Get the token ID to your server-side code for use.
-    },
+    token: function(token) {},
     opened: function () {
       console.log('Stripe Opened');
       mk_stripe_was_opened = true;

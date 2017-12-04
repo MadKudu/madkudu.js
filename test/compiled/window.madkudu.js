@@ -1,7 +1,5 @@
-'use strict'
-
-var chai = require('chai')
-var expect = chai.expect
+const chai = require('chai')
+const expect = chai.expect
 
 describe('window.madkudu', function () {
   it('should emit the ready callback', function (done) {
@@ -15,27 +13,25 @@ describe('window.madkudu', function () {
   })
 
   it('should instantiate options and settings', function () {
-    var madkudu = window.madkudu
+    const madkudu = window.madkudu
     expect(madkudu.VERSION).to.be.a('string')
     expect(madkudu.forms).to.be.an('array')
   })
 
   it('should not expose jquery', function () {
-    expect(window['jQuery']).to.be.undefined
-    expect(window['$']).to.be.undefined
+    expect(window['jQuery']).to.be.an('undefined')
+    expect(window['$']).to.be.an('undefined')
   })
 })
 
 describe('settings', function () {
   it('should instantiate the settings on load', function () {
-    var madkudu = window.madkudu
-
+    const madkudu = window.madkudu
     expect(madkudu.settings).to.be.an('object')
   })
 
   it('should have properties', function () {
-    var madkudu = window.madkudu
-
+    const madkudu = window.madkudu
     expect(madkudu.settings.api_key).to.be.a('string')
     expect(madkudu.settings.form).to.be.an('object')
     expect(madkudu.settings.form.active).to.be.a('boolean')
