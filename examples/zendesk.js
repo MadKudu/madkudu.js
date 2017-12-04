@@ -11,19 +11,19 @@ if (traits.first_name && traits.last_name) { attributes.name = traits.first_name
 
 var tags = []
 if (user.is_qualified()) { tags.push('good_fit') }
-var industry, company_name
+var company_name
 if (traits.company) {
   industry = traits.company.industry
   company_name = traits.company.name
   tags.push(traits.company.industry)
 }
 
-var top_signals = []
-try {
-  top_signals = madkudu.user().customer_fit().top_signals
-} catch (e) {
-  console.log(e)
-}
+// var top_signals = []
+// try {
+//   top_signals = madkudu.user().customer_fit().top_signals
+// } catch (e) {
+//   console.log(e)
+// }
 
 // for (i = 0; i < top_signals.length; i++) {
 //   tags.push(top_signals[i])
