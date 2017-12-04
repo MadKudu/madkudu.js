@@ -152,7 +152,7 @@ describe('form', function () {
       sinon.spy(form, 'trigger')
       form.load()
       sinon.assert.called(form.on_load)
-      // sinon.assert.calledWith(form.track, 'loaded')
+      // sinon.assert.calledWith(form.track, 'loaded') // disabled unless the debug setting is on
       sinon.assert.called(form.trigger)
     })
 
@@ -164,7 +164,22 @@ describe('form', function () {
       form.load()
       form.load()
       sinon.assert.calledOnce(form.on_load)
-      sinon.assert.calledOnce(form.track)
+      // sinon.assert.calledOnce(form.track) // disabled unless the debug setting is on
+      sinon.assert.calledOnce(form.trigger)
+    })
+
+    it('should call track if the debug settings is on', function () {
+      const settings = { debug: true, trigger: { js: '(function () {})();' }, variations: [ { name: 'variation ' } ] }
+      form = new Form(madkudu, settings)
+      form.init()
+      sinon.spy(form, 'on_load')
+      sinon.spy(form, 'track')
+      sinon.spy(form, 'parse_query_string')
+      sinon.spy(form, 'trigger')
+      form.load()
+      form.load()
+      sinon.assert.calledOnce(form.on_load)
+      sinon.assert.calledWith(form.track, 'loaded')
       sinon.assert.calledOnce(form.trigger)
     })
   })

@@ -92,7 +92,7 @@ describe('MadKudu', function () {
       madkudu.once('initialize', function () {
         done()
       })
-      madkudu.initialize(null, { initialPageview: true })
+      madkudu.initialize(undefined, { initialPageview: true })
     })
 
     it('should only initialize once', function () {
