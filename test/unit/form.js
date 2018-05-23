@@ -228,6 +228,12 @@ describe('form', function () {
       expect(form.email).to.equal(email)
     })
 
+    it('should set the mk_email ', function () {
+      const email = 'rafikah@madkudu.com'
+      form.set_mk_email(mk_email)
+      expect(form.email).to.equal(mk_email)
+    })
+
     it('should call identify with the email', function () {
       const email = 'test@madkudu.com'
       sinon.spy(madkudu, 'identify')
