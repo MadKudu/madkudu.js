@@ -1,7 +1,7 @@
 {
   "name": "@madkudu/madkudu.js",
   "author": "MadKudu <engineering@madkudu.com>",
-  "version": "1.4.3",
+  "version": "1.4.4",
   "license": "SEE LICENSE IN LICENSE",
   "description": "The MadKudu javascript library",
   "keywords": [
@@ -72,8 +72,8 @@
     "is": "3.2.1",
     "jquery": "3.2.1",
     "json3": "3.3.2",
-    "less": "2.7.3",
-    "less-loader": "4.0.5",
+    "less": "3.0.4",
+    "less-loader": "4.1.0",
     "loader-utils": "1.1.0",
     "lodash": "4.17.4",
     "next-tick": "1.0.0",

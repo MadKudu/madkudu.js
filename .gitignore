@@ -29,3 +29,8 @@ dist/coverage
 # Environment file #
 ####################
 .env
+
+# Test results #
+################
+
+test/errors/
