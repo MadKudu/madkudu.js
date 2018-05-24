@@ -24,7 +24,10 @@ Thumbs.db
 dist/**/*.js
 dist/**/*.json
 dist/**/*.map
-dist/coverage
+
+# Coverage #
+############
+coverage/
 
 # Environment file #
 ####################

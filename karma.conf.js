@@ -188,7 +188,7 @@ module.exports = function (config) {
     browserDisconnectTolerance: 1,
 
     coverageReporter: {
-      dir: 'dist/coverage/' + testType,
+      dir: 'coverage/' + testType,
       reporters: [
         { type: 'text' },
         { type: 'lcov' }
