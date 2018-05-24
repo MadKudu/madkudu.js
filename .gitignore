@@ -33,4 +33,4 @@ dist/coverage
 # Test results #
 ################
 
-test/errors
+test/errors/
