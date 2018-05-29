@@ -1,7 +1,7 @@
 {
   "name": "@madkudu/madkudu.js",
   "author": "MadKudu <engineering@madkudu.com>",
-  "version": "1.4.4",
+  "version": "1.4.5",
   "license": "SEE LICENSE IN LICENSE",
   "description": "The MadKudu javascript library",
   "keywords": [
@@ -75,10 +75,10 @@
     "less": "3.0.4",
     "less-loader": "4.1.0",
     "loader-utils": "1.1.0",
-    "lodash": "4.17.4",
+    "lodash": "4.17.10",
     "next-tick": "1.0.0",
     "proclaim": "3.5.0",
-    "pug": "2.0.0-rc.4",
+    "pug": "2.0.3",
     "pug-loader": "2.3.0",
     "q": "1.5.1",
     "query-string": "5.0.1",
@@ -113,8 +113,8 @@
     "object.observe": "0.2.6",
     "observe": "1.4.1",
     "sinon": "4.1.2",
-    "wdio-mocha-framework": "0.5.11",
-    "wdio-selenium-standalone-service": "0.0.9",
+    "wdio-mocha-framework": "0.5.13",
+    "wdio-selenium-standalone-service": "0.0.10",
     "webdriverio": "4.9.11"
   }
 }

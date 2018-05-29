@@ -53,6 +53,17 @@ jobs:
         - v1-dep-master-
         # Any branch if there are none on the default branch - this should be unnecessary if you have your default branch configured correctly
         - v1-dep-
+    # This is from Code Climate (see https://docs.codeclimate.com/docs/circle-ci-test-coverage-example#section-circleci-20)
+    - run:
+        name: Setup dependencies
+        command: |
+          sudo composer self-update
+          composer install -n --prefer-dist
+    - run:
+        name: Setup Code Climate test-reporter
+        command: |
+          curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+          chmod +x ./cc-test-reporter
     # This is based on your 1.0 configuration file or project settings
     - run: curl -L -o google-chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
     - run: sudo dpkg -i google-chrome.deb
