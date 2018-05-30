@@ -37,8 +37,7 @@
     "test-snippet": "NODE_ENV=test TESTS=snippet npm run karma",
     "test-stripe": "NODE_ENV=test TESTS=stripe npm run karma",
     "test-browser": "NODE_ENV=test TEST=browser node ./test/browser/index.js",
-    "karma": "./node_modules/karma/bin/karma start karma.conf.js",
-    "coverage": "./node_modules/codeclimate-test-reporter/bin/codeclimate.js < $(find dist/coverage/unit/Chrome*/lcov.info)"
+    "karma": "./node_modules/karma/bin/karma start karma.conf.js"
   },
   "dependencies": {
     "@ndhoule/clone": "1.0.0",
@@ -91,7 +90,6 @@
   "devDependencies": {
     "babel-plugin-istanbul": "4.1.5",
     "chai": "4.1.2",
-    "codeclimate-test-reporter": "0.5.0",
     "eslint": "4.12.1",
     "eslint-config-standard": "10.2.1",
     "eslint-plugin-import": "2.8.0",
