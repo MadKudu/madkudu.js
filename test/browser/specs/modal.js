@@ -10,7 +10,7 @@ chai.should()
 describe('functional / smart form modal', function () {
 	const browser = global.browser
 	const modal_options = {
-		calendlyUrl: 'https://calendly.com/sam_at_madkudu/30min',
+		calendlyUrl: 'https://calendly.com/sam_at_madkudu/15min',
 		title: 'Get to know us',
 		subtitle: 'Learn about all the cool features that MadKudu has to offer.',
 		cta_yes: 'Book time with an expert!',
