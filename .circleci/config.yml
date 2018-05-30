@@ -54,7 +54,9 @@ jobs:
         command: |
           ./cc-test-reporter before-build
           npm test
-          ./cc-test-reporter after-build --coverage-input-type lcov --exit-code $EXIT_CODE < "$(find ./dist/coverage/unit/Chrome*/lcov.info)"
+          mkdir coverage
+          find ./dist/coverage/unit/Chrome*/lcov.info -exec cp {} ./coverage/ \;
+          ./cc-test-reporter after-build --coverage-input-type lcov --exit-code $EXIT_CODE
     # Teardown
     - store_test_results:
         path: /tmp/circleci-test-results
