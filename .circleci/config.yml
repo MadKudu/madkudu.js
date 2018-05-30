@@ -38,7 +38,7 @@ jobs:
           sudo sed -i 's|HERE/chrome\"|HERE/chrome\" --disable-setuid-sandbox|g' /opt/google/chrome/google-chrome
           rm google-chrome.deb
     - run:
-        name: Set up sependencies
+        name: Set up dependencies
         command: |
           if [ -z "${NODE_ENV:-}" ]; then export NODE_ENV=test; fi
           export PATH="~/MadKudu/madkudu.js/node_modules/.bin:$PATH"
@@ -50,11 +50,14 @@ jobs:
         - ./node_modules
     # Test
     - run:
-        name: Run tests
+        name: Pre tests
         command: |
           ./cc-test-reporter before-build
-          npm test
           mkdir coverage
+    - run: npm test
+    - run:
+        name: Post tests
+        command: |
           find ./dist/coverage/unit/Chrome*/lcov.info -exec cp {} ./coverage/ \;
           ./cc-test-reporter after-build --coverage-input-type lcov --exit-code $EXIT_CODE
     # Teardown
