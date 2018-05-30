@@ -43,9 +43,12 @@ jobs:
         paths:
         - ./node_modules
     # Test
-    - run: ./cc-test-reporter before-build
-    - run: npm test
-    - run: ./cc-test-reporter after-build --exit-code $EXIT_CODE
+    - run:
+        name: Run tests
+        command: |
+          ./cc-test-reporter before-build
+          npm test
+          ./cc-test-reporter after-build --coverage-input-type lcov --exit-code $EXIT_CODE
     # Teardown
     - store_test_results:
         path: /tmp/circleci-test-results
