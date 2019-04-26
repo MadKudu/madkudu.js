@@ -1,7 +1,7 @@
 {
   "name": "@madkudu/madkudu.js",
   "author": "MadKudu <engineering@madkudu.com>",
-  "version": "1.4.5",
+  "version": "1.4.6",
   "license": "SEE LICENSE IN LICENSE",
   "description": "The MadKudu javascript library",
   "keywords": [
@@ -22,10 +22,10 @@
   },
   "main": "index.js",
   "scripts": {
-    "start": "node ./node_modules/.bin/pm2 start process.config.js",
-    "poststart": "node ./node_modules/.bin/pm2 logs",
-    "dev": "node ./node_modules/.bin/pm2-dev start app.js --ignore 'dist'",
-    "lint": "./node_modules/eslint/bin/eslint.js lib/ && ./node_modules/eslint/bin/eslint.js test/ && ./node_modules/eslint/bin/eslint.js utils/",
+    "start": "pm2 start process.config.js",
+    "poststart": "pm2 logs",
+    "dev": "pm2-dev start app.js --ignore 'dist'",
+    "lint": "eslint lib/ && eslint test/ && eslint utils/",
     "compile": "npm run lint && node utils/run_compiler",
     "test": "npm run test-unit && npm run test-functional && npm run test-browser",
     "test-unit": "NODE_ENV=test TESTS=unit npm run karma",
@@ -37,7 +37,7 @@
     "test-snippet": "NODE_ENV=test TESTS=snippet npm run karma",
     "test-stripe": "NODE_ENV=test TESTS=stripe npm run karma",
     "test-browser": "NODE_ENV=test TEST=browser node ./test/browser/index.js",
-    "karma": "./node_modules/karma/bin/karma start karma.conf.js"
+    "karma": "karma start karma.conf.js"
   },
   "dependencies": {
     "@ndhoule/clone": "1.0.0",
