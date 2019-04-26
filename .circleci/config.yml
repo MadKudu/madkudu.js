@@ -1,35 +1,37 @@
 version: 2
-jobs:
-  build:
-    working_directory: ~/MadKudu/madkudu.js
+
+references:
+  defaults: &defaults
+    working_directory: ~/repo
+    docker:
+      - image: circleci/build-image:ubuntu-14.04-XXL-upstart-1189-5614f37
+        command: /sbin/init
     parallelism: 1
     shell: /bin/bash --login
+
+jobs:
+  build_job:
+    <<: *defaults
+
     environment:
+      CC_TEST_REPORTER_ID: cc4cc3b429117620d21099a292136c912927b6d1feab569c8aa885e1c317a54c
       CIRCLE_ARTIFACTS: /tmp/circleci-artifacts
       CIRCLE_TEST_REPORTS: /tmp/circleci-test-results
-      CC_TEST_REPORTER_ID: cc4cc3b429117620d21099a292136c912927b6d1feab569c8aa885e1c317a54c
-    docker:
-    - image: circleci/build-image:ubuntu-14.04-XXL-upstart-1189-5614f37
-      command: /sbin/init
+
     steps:
+
     # Machine Setup
     - checkout
     - run: mkdir -p $CIRCLE_ARTIFACTS $CIRCLE_TEST_REPORTS
     - run:
-        working_directory: ~/MadKudu/madkudu.js
+        working_directory: ~/repo
         command: nvm install 6.10.3 && nvm alias default 6.10.3
+
     # Restore the dependency cache
     - restore_cache:
         keys:
-        - v1-dep-{{ .Branch }}-
-        - v1-dep-master-
-        - v1-dep-
-    # This is from Code Climate (see https://docs.codeclimate.com/docs/circle-ci-test-coverage-example#section-circleci-20)
-    - run:
-        name: Setup Code Climate test-reporter
-        command: |
-          curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-          chmod +x ./cc-test-reporter
+        - v1-dependencies-{{ checksum "package.json" }}
+
     - run:
         name: set up Chrome
         command: |
@@ -37,34 +39,74 @@ jobs:
           sudo dpkg -i google-chrome.deb
           sudo sed -i 's|HERE/chrome\"|HERE/chrome\" --disable-setuid-sandbox|g' /opt/google/chrome/google-chrome
           rm google-chrome.deb
+
     - run:
-        name: Set up dependencies
+        name: Set up path
         command: |
           if [ -z "${NODE_ENV:-}" ]; then export NODE_ENV=test; fi
           export PATH="~/MadKudu/madkudu.js/node_modules/.bin:$PATH"
-          npm install
+
+    - run: npm install
+
     # Save dependency cache
     - save_cache:
-        key: v1-dep-{{ .Branch }}-{{ epoch }}
+        key: v1-dependencies-{{ checksum "package.json" }}
         paths:
-        - ./node_modules
-    # Test
+          - ./node_modules
+
+    # Tests
+
+    # This is from Code Climate (see https://docs.codeclimate.com/docs/circle-ci-test-coverage-example#section-circleci-20)
     - run:
-        name: Pre tests
+        name: Setup test reporter
         command: |
+          curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+          chmod +x ./cc-test-reporter
           ./cc-test-reporter before-build
           mkdir coverage
+
     - run: npm test
+
     - run:
-        name: Post tests
+        name: Upload coverage
         command: |
           find ./dist/coverage/unit/Chrome*/lcov.info -exec cp {} ./coverage/ \;
           ./cc-test-reporter after-build --coverage-input-type lcov --exit-code $EXIT_CODE --debug
+
+    - persist_to_workspace:
+        root: ~/repo
+        paths: .
+
     # Teardown
     - store_test_results:
         path: /tmp/circleci-test-results
+
     # Save artifacts
     - store_artifacts:
         path: /tmp/circleci-artifacts
     - store_artifacts:
         path: /tmp/circleci-test-results
+
+  publish_job:
+    <<: *defaults
+
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ~/repo
+      - deploy:
+          command: npm publish
+
+workflows:
+  version: 2
+  build_and_deploy:
+    jobs:
+      - build_job:
+          context: dev
+      - publish_job:
+          context: prod
+          requires:
+            - build_job
+          filters:
+            branches:
+              only: master
