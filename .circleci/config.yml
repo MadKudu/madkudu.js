@@ -4,7 +4,7 @@ references:
   defaults: &defaults
     working_directory: ~/repo
     docker:
-      - image: madkudu/node:10.14.1
+      - image: circleci/build-image:ubuntu-14.04-XXL-upstart-1189-5614f37
 
 jobs:
   build_job:
@@ -17,6 +17,8 @@ jobs:
 
     # Machine Setup
     - checkout
+    - run: mkdir -p $CIRCLE_ARTIFACTS $CIRCLE_TEST_REPORTS
+    - run: nvm install 6.10.3 && nvm alias default 6.10.3
 
     # Restore the dependency cache
     - restore_cache:
@@ -37,6 +39,12 @@ jobs:
           sudo dpkg -i google-chrome.deb
           sudo sed -i 's|HERE/chrome\"|HERE/chrome\" --disable-setuid-sandbox|g' /opt/google/chrome/google-chrome
           rm google-chrome.deb
+
+    - run:
+        name: Set up path
+        command: |
+          if [ -z "${NODE_ENV:-}" ]; then export NODE_ENV=test; fi
+          export PATH="~/MadKudu/madkudu.js/node_modules/.bin:$PATH"
 
     - run: npm install
 
@@ -67,15 +75,15 @@ jobs:
         root: ~/repo
         paths: .
 
-    # # Teardown
-    # - store_test_results:
-    #     path: /tmp/circleci-test-results
+    # Teardown
+    - store_test_results:
+        path: /tmp/circleci-test-results
 
-    # # Save artifacts
-    # - store_artifacts:
-    #     path: /tmp/circleci-artifacts
-    # - store_artifacts:
-    #     path: /tmp/circleci-test-results
+    # Save artifacts
+    - store_artifacts:
+        path: /tmp/circleci-artifacts
+    - store_artifacts:
+        path: /tmp/circleci-test-results
 
   publish_job:
     <<: *defaults
