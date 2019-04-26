@@ -32,13 +32,6 @@ jobs:
         keys:
         - v1-dependencies-{{ checksum "package.json" }}
 
-    # This is from Code Climate (see https://docs.codeclimate.com/docs/circle-ci-test-coverage-example#section-circleci-20)
-    - run:
-        name: Setup Code Climate test-reporter
-        command: |
-          curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-          chmod +x ./cc-test-reporter
-
     - run:
         name: set up Chrome
         command: |
@@ -61,14 +54,16 @@ jobs:
         paths:
           - ./node_modules
 
-    # Test
+    # Tests
+
+    # This is from Code Climate (see https://docs.codeclimate.com/docs/circle-ci-test-coverage-example#section-circleci-20)
     - run:
         name: Setup test reporter
         command: |
           curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-          # This is from Code Climate (see https://docs.codeclimate.com/docs/circle-ci-test-coverage-example#section-circleci-20)
           chmod +x ./cc-test-reporter
           ./cc-test-reporter before-build
+          mkdir coverage
 
     - run: npm test
 
