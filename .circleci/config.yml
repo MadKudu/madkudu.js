@@ -5,9 +5,7 @@ references:
     working_directory: ~/repo
     docker:
       - image: circleci/build-image:ubuntu-14.04-XXL-upstart-1189-5614f37
-        command: /sbin/init
     parallelism: 1
-    shell: /bin/bash --login
     environment:
       CC_TEST_REPORTER_ID: cc4cc3b429117620d21099a292136c912927b6d1feab569c8aa885e1c317a54c
       CIRCLE_ARTIFACTS: /tmp/circleci-artifacts
