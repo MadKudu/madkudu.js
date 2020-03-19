@@ -25,7 +25,7 @@ jobs:
     - run: mkdir -p $CIRCLE_ARTIFACTS $CIRCLE_TEST_REPORTS
     - run:
         working_directory: ~/repo
-        command: nvm install 6.10.3 && nvm alias default 6.10.3
+        command: nvm install 10.16.3 && nvm alias default 10.16.3
 
     # Restore the dependency cache
     - restore_cache:
