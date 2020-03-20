@@ -5,11 +5,6 @@ references:
     working_directory: ~/repo
     docker:
       - image: circleci/node:10.16.3-browsers
-        environment:
-          - DISPLAY=:99
-          - CHROME_BIN=/usr/bin/google-chrome
-    parallelism: 1
-    shell: /bin/bash --login
 
 jobs:
   build_job:
