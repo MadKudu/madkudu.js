@@ -4,7 +4,7 @@ references:
   defaults: &defaults
     working_directory: ~/repo
     docker:
-      - image: circleci/build-image:ubuntu-14.04-XXL-upstart-1189-5614f37
+      - image: circleci/10.16.3-browsers
         env:
           - DISPLAY=:99
           - CHROME_BIN=/usr/bin/google-chrome
@@ -19,22 +19,11 @@ jobs:
 
     # Machine Setup
     - checkout
-    - run: mkdir -p $CIRCLE_ARTIFACTS $CIRCLE_TEST_REPORTS
-    - run:
-        working_directory: ~/repo
-        command: nvm install 10.16.3 && nvm alias default 10.16.3
 
     # Restore the dependency cache
     - restore_cache:
         keys:
         - v1-dependencies-{{ checksum "package.json" }}
-
-    - run:
-        name: set up Chrome
-        type: shell
-        command: |
-          wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-          dpkg -i google-chrome-stable_current_amd64.deb; apt-get -fy install
 
     - run:
         name: Starting Xvfb (for Browser Tests)
