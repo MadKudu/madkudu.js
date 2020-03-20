@@ -1,7 +1,7 @@
 {
   "name": "@madkudu/madkudu.js",
   "author": "MadKudu <engineering@madkudu.com>",
-  "version": "1.4.6",
+  "version": "1.5.1",
   "license": "SEE LICENSE IN LICENSE",
   "description": "The MadKudu javascript library",
   "keywords": [
@@ -17,8 +17,8 @@
   },
   "homepage": "https://github.com/MadKudu/madkudu.js#readme",
   "engines": {
-    "node": "6.10.3",
-    "npm": "3.10.10"
+    "node": "10.16.3",
+    "npm": "6.9.0"
   },
   "main": "index.js",
   "scripts": {
@@ -63,7 +63,7 @@
     "component-type": "1.2.1",
     "component-url": "0.2.1",
     "css-loader": "0.28.7",
-    "debug": "3.1.0",
+    "debug": "4.1.1",
     "eslint-loader": "1.9.0",
     "html-loader": "0.5.1",
     "imports-loader": "0.7.1",
@@ -74,7 +74,7 @@
     "less": "3.0.4",
     "less-loader": "4.1.0",
     "loader-utils": "1.1.0",
-    "lodash": "4.17.10",
+    "lodash": "4.17.15",
     "next-tick": "1.0.0",
     "proclaim": "3.5.0",
     "pug": "2.0.3",

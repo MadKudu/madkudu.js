@@ -15,7 +15,9 @@ module.exports = {
     rules: [
       {
         test: /\.js$/,
-        exclude: /node_modules(?!(\/@madkudu\/madkudu\.js))/, // exclude all node_modules, except @madkudu/madkudu.js (the exclusion is necessary for this to work inside another project)
+        exclude: /node_modules(?!(\/@madkudu\/madkudu\.js)|\/debug)/,
+        // exclude all node_modules, except @madkudu/madkudu.js (the exclusion is necessary for this to work inside another project)
+        // exclude debug to make sure it is run through babel too
         loader: 'babel-loader',
         options: babel_settings
       },

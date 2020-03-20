@@ -1,7 +1,4 @@
-'use strict'
-
-var chai = require('chai')
-var expect = chai.expect
+const { expect } = require('chai')
 const _ = require('lodash')
 
 var madkudu = require('../../lib')
@@ -15,11 +12,11 @@ describe('index.js', function () {
 
   describe('window', function () {
     it('should change only the madkudu property', function () {
-      const modifiedProperties = _.keys(_.omit(window.mk_window_changes, ['_', 'onerror', 'setImmediate', 'clearImmediate']))
+      const modifiedProperties = _.keys(_.omit(window.mk_window_changes, ['_', 'onerror', 'setImmediate', 'clearImmediate', 'InstallTriggerImpl']))
       /* @todo: the last two are not expected, getting rid of them for now but this needs to be fixed */
       // those last two should also not be there but they're a consequence of loading sinon (and we can't use noParse on sinon)
 
-      // console.log(modifiedProperties)
+      console.log(modifiedProperties)
 
       expect(modifiedProperties).to.have.members(['madkudu', '__coverage__'])
       // __coverage__ is expected in this context

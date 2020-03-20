@@ -4,41 +4,21 @@ references:
   defaults: &defaults
     working_directory: ~/repo
     docker:
-      - image: circleci/build-image:ubuntu-14.04-XXL-upstart-1189-5614f37
-        command: /sbin/init
-    parallelism: 1
-    shell: /bin/bash --login
+      - image: circleci/node:10.16.3-browsers
 
 jobs:
   build_job:
     <<: *defaults
 
-    environment:
-      CC_TEST_REPORTER_ID: cc4cc3b429117620d21099a292136c912927b6d1feab569c8aa885e1c317a54c
-      CIRCLE_ARTIFACTS: /tmp/circleci-artifacts
-      CIRCLE_TEST_REPORTS: /tmp/circleci-test-results
-
     steps:
 
     # Machine Setup
     - checkout
-    - run: mkdir -p $CIRCLE_ARTIFACTS $CIRCLE_TEST_REPORTS
-    - run:
-        working_directory: ~/repo
-        command: nvm install 6.10.3 && nvm alias default 6.10.3
 
     # Restore the dependency cache
     - restore_cache:
         keys:
-        - v1-dependencies-{{ checksum "package.json" }}
-
-    - run:
-        name: set up Chrome
-        command: |
-          curl -L -o google-chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-          sudo dpkg -i google-chrome.deb
-          sudo sed -i 's|HERE/chrome\"|HERE/chrome\" --disable-setuid-sandbox|g' /opt/google/chrome/google-chrome
-          rm google-chrome.deb
+        - v1-dependencies-{{ checksum "package-lock.json" }}
 
     - run:
         name: Set up path
@@ -50,7 +30,7 @@ jobs:
 
     # Save dependency cache
     - save_cache:
-        key: v1-dependencies-{{ checksum "package.json" }}
+        key: v1-dependencies-{{ checksum "package-lock.json" }}
         paths:
           - ./node_modules
 
@@ -71,21 +51,11 @@ jobs:
         name: Upload coverage
         command: |
           find ./dist/coverage/unit/Chrome*/lcov.info -exec cp {} ./coverage/ \;
-          ./cc-test-reporter after-build --coverage-input-type lcov --exit-code $EXIT_CODE --debug
+          ./cc-test-reporter after-build --coverage-input-type lcov
 
     - persist_to_workspace:
         root: ~/repo
         paths: .
-
-    # Teardown
-    - store_test_results:
-        path: /tmp/circleci-test-results
-
-    # Save artifacts
-    - store_artifacts:
-        path: /tmp/circleci-artifacts
-    - store_artifacts:
-        path: /tmp/circleci-test-results
 
   publish_job:
     <<: *defaults
