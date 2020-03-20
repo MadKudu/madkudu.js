@@ -26,12 +26,6 @@ jobs:
         - v1-dependencies-{{ checksum "package-lock.json" }}
 
     - run:
-        name: Starting Xvfb (for Browser Tests)
-        type: shell
-        command: Xvfb :99 -screen 0 1280x1024x24
-        background: true
-
-    - run:
         name: Set up path
         command: |
           if [ -z "${NODE_ENV:-}" ]; then export NODE_ENV=test; fi
