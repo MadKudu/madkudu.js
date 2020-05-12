@@ -44,6 +44,7 @@ module.exports = function (settings = {}, options = {}) {
     webpack_config.plugins.push(
       new webpack.ProvidePlugin({
         $: 'jquery/dist/jquery.slim',
+        mk$: 'jquery/dist/jquery.slim',
         querystring: 'query-string',
         component_event: 'component-event',
         type: 'component-type',

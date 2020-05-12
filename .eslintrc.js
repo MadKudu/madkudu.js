@@ -15,6 +15,7 @@ module.exports = {
     'require': false,
     'global': false,
     '$': false,
+    'mk$': false,
     'querystring': false,
     'component_event': false,
     'type': false,
