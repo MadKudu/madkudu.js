@@ -79,7 +79,7 @@
     "pug": "2.0.3",
     "pug-loader": "2.3.0",
     "q": "1.5.1",
-    "query-string": "5.0.1",
+    "query-string": "6.12.1",
     "spark-md5": "3.0.0",
     "style-loader": "0.19.0",
     "uglify-js": "3.2.1",
