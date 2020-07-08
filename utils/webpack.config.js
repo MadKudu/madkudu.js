@@ -1,12 +1,3 @@
-const babel_settings = {
-  presets: ['@babel/preset-env'],
-  env: {
-    test: {
-      plugins: ['istanbul']
-    }
-  }
-}
-
 module.exports = {
   mode: 'development',
   resolveLoader: {
@@ -19,7 +10,14 @@ module.exports = {
         exclude: /node_modules(?!(\/@madkudu\/madkudu\.js))/,
         // exclude all node_modules, except @madkudu/madkudu.js (the exclusion is necessary for this to work inside another project)
         loader: 'babel-loader',
-        options: babel_settings
+        options: {
+          presets: ['@babel/preset-env'],
+          env: {
+            test: {
+              plugins: ['istanbul']
+            }
+          }
+        }
       },
       {
         test: /\.css$/,
