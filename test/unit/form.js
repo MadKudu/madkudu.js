@@ -82,7 +82,7 @@ describe('form', function () {
     })
 
     it('should instantiate a trigger and variation', function () {
-      const settings = { trigger: { js: '(function () {})();' }, variations: [ { name: 'variation ' } ] }
+      const settings = { trigger: { js: '(function () {})();' }, variations: [{ name: 'variation ' }] }
       var form = new Form(madkudu, settings)
       form.initialize_variation()
       expect(form._trigger).to.be.a('function')
@@ -100,7 +100,7 @@ describe('form', function () {
 
   describe('#initialize_events', function () {
     it('should instantiate event listener for each events', function (done) {
-      const settings = { trigger: { js: '(function () {})();' }, variations: [ { name: 'variation ' } ] }
+      const settings = { trigger: { js: '(function () {})();' }, variations: [{ name: 'variation ' }] }
       var form = new Form(madkudu, settings)
       form.init()
       const properties = { a: 'b' }
@@ -116,7 +116,7 @@ describe('form', function () {
     var form
 
     beforeEach(function () {
-      const settings = { trigger: { js: '(function () {})();' }, variations: [ { name: 'variation ' } ] }
+      const settings = { trigger: { js: '(function () {})();' }, variations: [{ name: 'variation ' }] }
       form = new Form(madkudu, settings)
       form.init()
     })
@@ -140,7 +140,7 @@ describe('form', function () {
     var form
 
     beforeEach(function () {
-      const settings = { trigger: { js: '(function () {})();' }, variations: [ { name: 'variation ' } ] }
+      const settings = { trigger: { js: '(function () {})();' }, variations: [{ name: 'variation ' }] }
       form = new Form(madkudu, settings)
       form.init()
     })
@@ -169,7 +169,7 @@ describe('form', function () {
     })
 
     it('should call track if the debug settings is on', function () {
-      const settings = { debug: true, trigger: { js: '(function () {})();' }, variations: [ { name: 'variation ' } ] }
+      const settings = { debug: true, trigger: { js: '(function () {})();' }, variations: [{ name: 'variation ' }] }
       form = new Form(madkudu, settings)
       form.init()
       sinon.spy(form, 'on_load')
@@ -188,7 +188,7 @@ describe('form', function () {
     var form
 
     beforeEach(function () {
-      const settings = { trigger: { js: '(function () {})();' }, variations: [ { name: 'variation ' } ] }
+      const settings = { trigger: { js: '(function () {})();' }, variations: [{ name: 'variation ' }] }
       form = new Form(madkudu, settings)
       form.init()
     })
@@ -212,7 +212,7 @@ describe('form', function () {
     })
 
     beforeEach(function () {
-      const settings = { trigger: { js: '(function () {})();' }, variations: [ { name: 'variation ' } ] }
+      const settings = { trigger: { js: '(function () {})();' }, variations: [{ name: 'variation ' }] }
       form = new Form(madkudu, settings)
       form.init()
     })
@@ -247,7 +247,7 @@ describe('form', function () {
     var form
 
     beforeEach(function () {
-      const settings = { trigger: { js: '(function () {})();' }, variations: [ { name: 'variation ' } ] }
+      const settings = { trigger: { js: '(function () {})();' }, variations: [{ name: 'variation ' }] }
       form = new Form(madkudu, settings)
       form.init()
     })

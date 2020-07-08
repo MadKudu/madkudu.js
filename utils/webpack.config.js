@@ -1,13 +1,14 @@
 const babel_settings = {
-  'presets': ['env'],
-  'env': {
-    'test': {
-      'plugins': [ 'istanbul' ]
+  presets: ['@babel/preset-env'],
+  env: {
+    test: {
+      plugins: ['istanbul']
     }
   }
 }
 
 module.exports = {
+  mode: 'development',
   resolveLoader: {
     modules: ['utils', 'node_modules']
   },
@@ -39,11 +40,11 @@ module.exports = {
       {
         test: /\.pug$/,
         use: 'pug-loader'
-      },
-      {
-        test: require.resolve('json3'),
-        loader: 'imports-loader?define=>false'
-      } // without this, loading json3 modifies window.JSON (see https://github.com/webpack/docs/wiki/shimming-modules#disable-some-module-styles)
+      }
+      // {
+      //   test: require.resolve('json3'),
+      //   loader: 'imports-loader?define=>false'
+      // } // without this, loading json3 modifies window.JSON (see https://github.com/webpack/docs/wiki/shimming-modules#disable-some-module-styles)
     ],
     noParse: [
       /jquery/,

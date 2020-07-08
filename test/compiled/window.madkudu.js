@@ -19,8 +19,8 @@ describe('window.madkudu', function () {
   })
 
   it('should not expose jquery', function () {
-    expect(window['jQuery']).to.be.an('undefined')
-    expect(window['$']).to.be.an('undefined')
+    expect(window.jQuery).to.be.an('undefined')
+    expect(window.$).to.be.an('undefined')
   })
 })
 
