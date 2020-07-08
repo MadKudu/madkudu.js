@@ -1,5 +1,4 @@
-const chai = require('chai')
-const expect = chai.expect
+const { expect } = require('chai')
 
 describe('MadKudu Snippet', function () {
   it('should emit the ready callback', function (done) {

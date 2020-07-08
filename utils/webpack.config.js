@@ -38,6 +38,19 @@ module.exports = {
       {
         test: /\.pug$/,
         use: 'pug-loader'
+      },
+      // without this, loading json3 modifies window.JSON (see https://github.com/webpack/docs/wiki/shimming-modules#disable-some-module-styles)
+      {
+        test: require.resolve('json3'),
+        use: [
+          {
+            loader: 'imports-loader',
+            options: {
+              additionalCode:
+                'var define = false; /* Disable AMD for misbehaving libraries */'
+            }
+          }
+        ]
       }
     ],
     noParse: [
