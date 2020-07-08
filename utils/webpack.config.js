@@ -1,13 +1,5 @@
-const babel_settings = {
-  'presets': ['env'],
-  'env': {
-    'test': {
-      'plugins': [ 'istanbul' ]
-    }
-  }
-}
-
 module.exports = {
+  mode: 'development',
   resolveLoader: {
     modules: ['utils', 'node_modules']
   },
@@ -18,7 +10,14 @@ module.exports = {
         exclude: /node_modules(?!(\/@madkudu\/madkudu\.js))/,
         // exclude all node_modules, except @madkudu/madkudu.js (the exclusion is necessary for this to work inside another project)
         loader: 'babel-loader',
-        options: babel_settings
+        options: {
+          presets: ['@babel/preset-env'],
+          env: {
+            test: {
+              plugins: ['istanbul']
+            }
+          }
+        }
       },
       {
         test: /\.css$/,
@@ -40,10 +39,19 @@ module.exports = {
         test: /\.pug$/,
         use: 'pug-loader'
       },
+      // without this, loading json3 modifies window.JSON (see https://github.com/webpack/docs/wiki/shimming-modules#disable-some-module-styles)
       {
         test: require.resolve('json3'),
-        loader: 'imports-loader?define=>false'
-      } // without this, loading json3 modifies window.JSON (see https://github.com/webpack/docs/wiki/shimming-modules#disable-some-module-styles)
+        use: [
+          {
+            loader: 'imports-loader',
+            options: {
+              additionalCode:
+                'var define = false; /* Disable AMD for misbehaving libraries */'
+            }
+          }
+        ]
+      }
     ],
     noParse: [
       /jquery/,

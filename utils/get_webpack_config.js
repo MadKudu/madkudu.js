@@ -57,10 +57,7 @@ module.exports = function (settings = {}, options = {}) {
 
   // minimize if options.min
   if (options.min) {
-    webpack_config.plugins.push(new webpack.optimize.UglifyJsPlugin({
-      compress: { warnings: !process.env.NODE_ENV === 'production' },
-      sourceMap: true
-    }))
+    webpack_config.mode = 'production'
   }
 
   debug(webpack_config)

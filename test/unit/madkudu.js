@@ -687,7 +687,7 @@ describe('MadKudu', function () {
         form: {
           active: false,
           has_campaigns: false,
-          campaigns: [ { name: 'a' }, { name: 'b' } ]
+          campaigns: [{ name: 'a' }, { name: 'b' }]
         }
       }
 

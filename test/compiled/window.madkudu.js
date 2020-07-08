@@ -1,5 +1,4 @@
-const chai = require('chai')
-const expect = chai.expect
+const { expect } = require('chai')
 
 describe('window.madkudu', function () {
   it('should emit the ready callback', function (done) {
@@ -19,8 +18,8 @@ describe('window.madkudu', function () {
   })
 
   it('should not expose jquery', function () {
-    expect(window['jQuery']).to.be.an('undefined')
-    expect(window['$']).to.be.an('undefined')
+    expect(window.jQuery).to.be.an('undefined')
+    expect(window.$).to.be.an('undefined')
   })
 })
 

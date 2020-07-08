@@ -1,5 +1,4 @@
-const chai = require('chai')
-const expect = chai.expect
+const { expect } = require('chai')
 
 describe('stripe checkout.js', function () {
   this.timeout(20000)

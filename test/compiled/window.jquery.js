@@ -1,5 +1,4 @@
-const chai = require('chai')
-const expect = chai.expect
+const { expect } = require('chai')
 
 describe('jquery', function () {
   before(function (done) {
