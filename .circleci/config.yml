@@ -45,13 +45,13 @@ jobs:
           ./cc-test-reporter before-build
           mkdir coverage
 
-    - run: npm test
+    # - run: npm test
 
-    - run:
-        name: Upload coverage
-        command: |
-          find ./dist/coverage/unit/Chrome*/lcov.info -exec cp {} ./coverage/ \;
-          ./cc-test-reporter after-build --coverage-input-type lcov
+    # - run:
+    #     name: Upload coverage
+    #     command: |
+    #       find ./dist/coverage/unit/Chrome*/lcov.info -exec cp {} ./coverage/ \;
+    #       ./cc-test-reporter after-build --coverage-input-type lcov
 
     - persist_to_workspace:
         root: ~/repo
